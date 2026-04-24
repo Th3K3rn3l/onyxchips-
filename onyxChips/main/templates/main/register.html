@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnyxChips — Регистрация</title>
+    <link rel="stylesheet" href="{% static 'main/slots/auth-style.css' %}">
+    <link rel="stylesheet" href="{% static 'main/slots/notifications.css' %}">
+</head>
+<body>
+    <div class="auth-wrapper">
+        <div class="auth-container">
+            <div class="auth-logo">
+                <img src="{% static 'main/slots/onyxchips-logo.png' %}" alt="OnyxChips">
+            </div>
+
+            <h1 class="auth-title">РЕГИСТРАЦИЯ</h1>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post" class="auth-form">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="username">Имя пользователя</label>
+                    <input type="text" id="username" name="username" required autofocus>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password1">Пароль</label>
+                    <input type="password" id="password1" name="password1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password2">Подтвердите пароль</label>
+                    <input type="password" id="password2" name="password2" required>
+                </div>
+
+                <button type="submit" class="auth-btn">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+            </form>
+
+            <div class="auth-links">
+                <p>Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
+            </div>
+        </div>
+
+        <div class="particles" id="particles"></div>
+    </div>
+
+    <script src="{% static 'main/slots/sound-manager.js' %}"></script>
+    <script src="{% static 'main/slots/notifications.js' %}"></script>
+    <script src="{% static 'main/slots/theme-switcher.js' %}"></script>
+    <script src="{% static 'main/slots/auth-particles.js' %}"></script>
+    <script>
+        {% if messages %}
+            {% for message in messages %}
+                showNotification('{{ message.tags }}',
+                    '{{ message.tags|title }}',
+                    '{{ message|escapejs }}');
+            {% endfor %}
+        {% endif %}
+    </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnyxChips — Слоты</title>
+    <link rel="stylesheet" href="{% static 'main/slots/slots-style.css' %}">
+    <link rel="stylesheet" href="{% static 'main/slots/loading-screen.css' %}">
+    <link rel="stylesheet" href="{% static 'main/slots/page-transitions.css' %}">
+    <link rel="stylesheet" href="{% static 'main/slots/hotkeys.css' %}">
+    <link rel="stylesheet" href="{% static 'main/slots/animations.css' %}">
+    <link rel="stylesheet" href="{% static 'main/slots/mobile.css' %}">
+    <script src="{% static 'main/slots/loading-screen.js' %}"></script>
+</head>
+<body>
+    {% include 'main/components/level_bar.html' %}
+
+    <div class="site-wrapper">
+        <!-- Верхняя панель -->
+        <div class="top-bar">
+            <div class="logo">
+                <a href="{% url 'index' %}" class="back-link">← На главную</a>
+                <img src="{% static 'main/slots/onyxchips-logo.png' %}" alt="OnyxChips" class="logo-img">
+            </div>
+            <div class="top-buttons">
+                <a href="{% url 'profile' %}" class="top-icon-btn">
+                    <img src="{% static 'main/slots/account-icon.png' %}" class="top-icon" onerror="this.style.display='none'">
+                </a>
+                <a href="{% url 'settings' %}" class="top-icon-btn">
+                    <img src="{% static 'main/slots/settings-icon.png' %}" class="top-icon" onerror="this.style.display='none'">
+                </a>
+                <a href="{% url 'logout' %}" class="top-icon-btn">
+                    <img src="{% static 'main/slots/logout-icon.png' %}" class="top-icon" onerror="this.style.display='none'">
+                </a>
+            </div>
+        </div>
+
+        <!-- Полоска -->
+        <div class="line"></div>
+
+        <!-- Игровая область -->
+        <div class="game-container">
+            <h1 class="game-title">SLOTS</h1>
+
+            <!-- Барабаны -->
+            <div class="reels" id="reels">
+                <div class="reel">
+                    <img src="{% static 'main/slots/cherry.png' %}" class="reel-img" alt="cherry">
+                    <img src="{% static 'main/slots/cherry.png' %}" class="reel-img" alt="cherry">
+                    <img src="{% static 'main/slots/cherry.png' %}" class="reel-img" alt="cherry">
+                </div>
+                <div class="reel">
+                    <img src="{% static 'main/slots/cherry.png' %}" class="reel-img" alt="cherry">
+                    <img src="{% static 'main/slots/cherry.png' %}" class="reel-img" alt="cherry">
+                    <img src="{% static 'main/slots/cherry.png' %}" class="reel-img" alt="cherry">
+                </div>
+                <div class="reel">
+                    <img src="{% static 'main/slots/cherry.png' %}" class="reel-img" alt="cherry">
+                    <img src="{% static 'main/slots/cherry.png' %}" class="reel-img" alt="cherry">
+                    <img src="{% static 'main/slots/cherry.png' %}" class="reel-img" alt="cherry">
+                </div>
+            </div>
+
+            <!-- Информационная панель -->
+            <div class="info-panel">
+                <div class="balance-box">
+                    <span class="label">Баланс:</span>
+                    <span class="value" id="balance">1000</span>
+                </div>
+                <div class="bet-box">
+                    <span class="label">Ставка:</span>
+                    <div class="bet-controls">
+                        <button class="bet-btn" id="betDown">-</button>
+                        <span class="value" id="betAmount">10</span>
+                        <button class="bet-btn" id="betUp">+</button>
+                    </div>
+                </div>
+                <div class="win-box">
+                    <span class="label">Выигрыш:</span>
+                    <span class="value win-amount" id="winAmount">0</span>
+                </div>
+            </div>
+
+            <!-- Кнопка Spin -->
+            <button class="spin-btn" id="spinBtn">КРУТИТЬ</button>
+
+            <!-- Сообщение о выигрыше -->
+            <div class="win-message" id="winMessage"></div>
+        </div>
+    </div>
+
+    <!-- Popup для выигрыша -->
+    <div class="win-popup" id="winPopup">
+        <div class="win-popup-content">
+            <div class="win-popup-icon">🎉</div>
+            <div class="win-popup-title" id="winPopupTitle">ВЫИГРЫШ!</div>
+            <div class="win-popup-amount" id="winPopupAmount">0</div>
+            <div class="win-popup-details" id="winPopupDetails"></div>
+        </div>
+    </div>
+
+    <script>
+        // Устанавливаем базовый путь для изображений
+        const STATIC_URL = "{% static 'main/slots/' %}";
+    </script>
+    <script src="{% static 'main/slots/sound-manager.js' %}"></script>
+    <script src="{% static 'main/slots/level-bar-updater.js' %}"></script>
+    <script src="{% static 'main/slots/theme-switcher.js' %}"></script>
+    <script src="{% static 'main/slots/page-transitions.js' %}"></script>
+    <script src="{% static 'main/slots/hotkeys.js' %}"></script>
+    <script src="{% static 'main/slots/animations.js' %}"></script>
+    <script src="{% static 'main/slots/slots-game.js' %}"></script>
+</body>
+</html>

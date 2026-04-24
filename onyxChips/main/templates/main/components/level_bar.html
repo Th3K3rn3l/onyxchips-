@@ -1,0 +1,27 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'main/slots/level-bar.css' %}">
+
+<div class="level-bar-container">
+    <div class="level-bar-content">
+        <div class="level-info">
+            <div class="level-badge">LVL {{ user.level }}</div>
+            <div class="level-rank">{{ user.rank_title }}</div>
+        </div>
+
+        <div class="progress-wrapper">
+            <div class="progress-label">
+                <span>{{ user.experience }} / {{ user.experience_to_next_level }} XP</span>
+                <span>{{ user.experience_progress|floatformat:0 }}%</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: {{ user.experience_progress }}%"></div>
+            </div>
+        </div>
+
+        <div class="level-stats">
+            <span>💰 {{ user.balance }}</span>
+            <span>🎮 {{ user.total_games }}</span>
+            <span>🏆 {{ user.total_wins }}</span>
+        </div>
+    </div>
+</div>

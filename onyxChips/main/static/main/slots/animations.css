@@ -1,0 +1,345 @@
+/* Дополнительные анимации и эффекты */
+
+/* Пульсация для важных элементов */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.pulse {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Тряска для ошибок */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Вращение */
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.rotate {
+    animation: rotate 2s linear infinite;
+}
+
+/* Bounce эффект */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-20px); }
+    60% { transform: translateY(-10px); }
+}
+
+.bounce {
+    animation: bounce 1s ease-in-out;
+}
+
+/* Свечение при наведении на кнопки */
+.glow-on-hover {
+    position: relative;
+    overflow: hidden;
+}
+
+.glow-on-hover::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+    pointer-events: none;
+}
+
+.glow-on-hover:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* Эффект печатной машинки для текста */
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+.typewriter {
+    overflow: hidden;
+    border-right: 2px solid #E6BE8A;
+    white-space: nowrap;
+    animation: typing 3s steps(40) 1s 1 normal both, blink 0.75s step-end infinite;
+}
+
+/* Эффект волны для текста */
+.wave-text span {
+    display: inline-block;
+    animation: wave 1.5s ease-in-out infinite;
+}
+
+.wave-text span:nth-child(1) { animation-delay: 0s; }
+.wave-text span:nth-child(2) { animation-delay: 0.1s; }
+.wave-text span:nth-child(3) { animation-delay: 0.2s; }
+.wave-text span:nth-child(4) { animation-delay: 0.3s; }
+.wave-text span:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes wave {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Эффект мерцания */
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.flicker {
+    animation: flicker 2s ease-in-out infinite;
+}
+
+/* Эффект появления снизу */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-up {
+    animation: slideUp 0.6s ease-out;
+}
+
+/* Эффект появления сверху */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-down {
+    animation: slideDown 0.6s ease-out;
+}
+
+/* Эффект появления слева */
+@keyframes slideLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.slide-left {
+    animation: slideLeft 0.6s ease-out;
+}
+
+/* Эффект появления справа */
+@keyframes slideRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.slide-right {
+    animation: slideRight 0.6s ease-out;
+}
+
+/* Эффект увеличения */
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.zoom-in {
+    animation: zoomIn 0.5s ease-out;
+}
+
+/* Эффект уменьшения */
+@keyframes zoomOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}
+
+.zoom-out {
+    animation: zoomOut 0.5s ease-out;
+}
+
+/* Эффект вращения и появления */
+@keyframes rotateIn {
+    from {
+        opacity: 0;
+        transform: rotate(-200deg) scale(0);
+    }
+    to {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+    }
+}
+
+.rotate-in {
+    animation: rotateIn 0.6s ease-out;
+}
+
+/* Эффект переливающегося фона */
+@keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.gradient-animate {
+    background-size: 200% 200%;
+    animation: gradient-shift 3s ease infinite;
+}
+
+/* Эффект парящих частиц */
+@keyframes float-particle {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) translateX(50px);
+        opacity: 0;
+    }
+}
+
+.floating-particle {
+    animation: float-particle 5s ease-in-out infinite;
+}
+
+/* Эффект радужного свечения */
+@keyframes rainbow-glow {
+    0% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
+    16% { box-shadow: 0 0 20px rgba(255, 127, 0, 0.5); }
+    33% { box-shadow: 0 0 20px rgba(255, 255, 0, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(0, 255, 0, 0.5); }
+    66% { box-shadow: 0 0 20px rgba(0, 0, 255, 0.5); }
+    83% { box-shadow: 0 0 20px rgba(139, 0, 255, 0.5); }
+    100% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
+}
+
+.rainbow-glow {
+    animation: rainbow-glow 3s linear infinite;
+}
+
+/* Эффект дрожания */
+@keyframes jiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-2deg); }
+    75% { transform: rotate(2deg); }
+}
+
+.jiggle {
+    animation: jiggle 0.3s ease-in-out infinite;
+}
+
+/* Эффект сердцебиения */
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    10%, 30% { transform: scale(1.1); }
+    20%, 40% { transform: scale(1); }
+}
+
+.heartbeat {
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+/* Применение эффектов к элементам */
+.spin-btn:not(:disabled) {
+    transition: all 0.3s ease;
+}
+
+.spin-btn:not(:disabled):hover {
+    animation: pulse 1s ease-in-out infinite;
+}
+
+.game-btn {
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.level-badge {
+    transition: all 0.3s ease;
+}
+
+.level-badge:hover {
+    animation: jiggle 0.5s ease-in-out;
+}
+
+/* Анимация для монет в балансе */
+.balance-box .value,
+.win-box .value {
+    transition: all 0.3s ease;
+}
+
+.balance-box .value.updated {
+    animation: bounce 0.6s ease-out;
+    color: #4caf50;
+}
+
+/* Эффект для карточек статистики */
+.stat-card {
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}

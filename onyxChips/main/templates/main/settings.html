@@ -1,0 +1,273 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnyxChips — Настройки</title>
+    <link rel="stylesheet" href="{% static 'main/slots/style.css' %}">
+    <style>
+        .settings-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 40px;
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border: 3px solid #E6BE8A;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .settings-title {
+            font-size: 36px;
+            color: #E6BE8A;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 900;
+            text-shadow: 0 0 20px rgba(230, 190, 138, 0.5);
+        }
+
+        .settings-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            color: #E6BE8A;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .setting-item {
+            background: rgba(42, 42, 42, 0.6);
+            border: 1px solid rgba(230, 190, 138, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .setting-item:hover {
+            border-color: #E6BE8A;
+            box-shadow: 0 5px 20px rgba(230, 190, 138, 0.2);
+        }
+
+        .setting-label {
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .setting-description {
+            color: #888;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: #555;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: #E6BE8A;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(30px);
+        }
+
+        .select-box {
+            background: #333;
+            border: 2px solid #E6BE8A;
+            border-radius: 10px;
+            padding: 8px 15px;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, #E6BE8A, #c4a060);
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a1a;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(230, 190, 138, 0.4);
+        }
+    </style>
+</head>
+<body>
+    {% include 'main/components/level_bar.html' %}
+
+    <div class="site-wrapper">
+        <!-- Верхняя панель -->
+        <div class="top-bar">
+            <div class="logo">
+                <a href="{% url 'index' %}" class="back-link">← На главную</a>
+                <img src="{% static 'main/slots/onyxchips-logo.png' %}" alt="OnyxChips" class="logo-img">
+            </div>
+            <div class="top-buttons">
+                <a href="{% url 'profile' %}" class="top-icon-btn">
+                    <img src="{% static 'main/slots/account-icon.png' %}" class="top-icon">
+                </a>
+                <a href="{% url 'settings' %}" class="top-icon-btn">
+                    <img src="{% static 'main/slots/settings-icon.png' %}" class="top-icon">
+                </a>
+                <a href="{% url 'logout' %}" class="top-icon-btn">
+                    <img src="{% static 'main/slots/logout-icon.png' %}" class="top-icon">
+                </a>
+            </div>
+        </div>
+
+        <div class="line"></div>
+
+        <!-- Настройки -->
+        <div class="settings-container">
+            <h1 class="settings-title">НАСТРОЙКИ</h1>
+
+            <div class="settings-section">
+                <h2 class="section-title">Игра</h2>
+
+                <div class="setting-item">
+                    <div>
+                        <div class="setting-label">Звуковые эффекты</div>
+                        <div class="setting-description">Включить звуки при вращении и выигрыше</div>
+                    </div>
+                    <div class="toggle-switch active" id="sound-toggle" onclick="toggleSound(this)">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div>
+                        <div class="setting-label">Анимации</div>
+                        <div class="setting-description">Показывать анимации и эффекты</div>
+                    </div>
+                    <div class="toggle-switch active" onclick="this.classList.toggle('active')">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div>
+                        <div class="setting-label">Автоигра</div>
+                        <div class="setting-description">Разрешить автоматическое вращение</div>
+                    </div>
+                    <div class="toggle-switch" onclick="this.classList.toggle('active')">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h2 class="section-title">Интерфейс</h2>
+
+                <div class="setting-item">
+                    <div>
+                        <div class="setting-label">Язык</div>
+                        <div class="setting-description">Выберите язык интерфейса</div>
+                    </div>
+                    <select class="select-box">
+                        <option>Русский</option>
+                        <option>English</option>
+                        <option>Español</option>
+                    </select>
+                </div>
+
+                <div class="setting-item">
+                    <div>
+                        <div class="setting-label">Тема</div>
+                        <div class="setting-description">Цветовая схема приложения</div>
+                    </div>
+                    <select class="select-box" id="theme-select">
+                        <option>Темная</option>
+                        <option>Светлая</option>
+                        <option>Авто</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h2 class="section-title">Уведомления</h2>
+
+                <div class="setting-item">
+                    <div>
+                        <div class="setting-label">Email уведомления</div>
+                        <div class="setting-description">Получать новости на почту</div>
+                    </div>
+                    <div class="toggle-switch active" onclick="this.classList.toggle('active')">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div>
+                        <div class="setting-label">Push уведомления</div>
+                        <div class="setting-description">Показывать уведомления в браузере</div>
+                    </div>
+                    <div class="toggle-switch" onclick="this.classList.toggle('active')">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="save-btn">СОХРАНИТЬ НАСТРОЙКИ</button>
+        </div>
+    </div>
+
+    <script src="{% static 'main/slots/sound-manager.js' %}"></script>
+    <script src="{% static 'main/slots/theme-switcher.js' %}"></script>
+    <script>
+        // Инициализация переключателя звука
+        document.addEventListener('DOMContentLoaded', function() {
+            const soundToggle = document.getElementById('sound-toggle');
+            if (soundToggle && window.soundManager) {
+                // Устанавливаем начальное состояние
+                if (!soundManager.enabled) {
+                    soundToggle.classList.remove('active');
+                }
+            }
+        });
+
+        function toggleSound(toggle) {
+            toggle.classList.toggle('active');
+            if (window.soundManager) {
+                soundManager.setEnabled(toggle.classList.contains('active'));
+                // Проигрываем тестовый звук
+                if (soundManager.enabled) {
+                    soundManager.play('click');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

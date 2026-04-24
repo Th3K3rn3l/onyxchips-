@@ -1,0 +1,302 @@
+/* OnyxChips Admin Styles */
+
+/* Основной фон и цвета */
+#header {
+    background: linear-gradient(135deg, #1a1a1a, #2a2a2a) !important;
+    border-bottom: 3px solid #E6BE8A !important;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5) !important;
+}
+
+#branding h1, #branding h1 a:link, #branding h1 a:visited {
+    color: #E6BE8A !important;
+    font-weight: 900 !important;
+    text-shadow: 0 0 20px rgba(230, 190, 138, 0.5) !important;
+}
+
+body {
+    background: #0a0a0a !important;
+    font-family: 'Segoe UI', Arial, sans-serif !important;
+}
+
+#content {
+    background: linear-gradient(135deg, #1a1a1a, #0a0a0a) !important;
+    padding: 30px !important;
+}
+
+/* Модули и таблицы */
+.module {
+    background: rgba(42, 42, 42, 0.9) !important;
+    border: 2px solid #E6BE8A !important;
+    border-radius: 15px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+.module h2, .module caption {
+    background: linear-gradient(135deg, #E6BE8A, #c4a060) !important;
+    color: #1a1a1a !important;
+    font-weight: 900 !important;
+    border-radius: 12px 12px 0 0 !important;
+    padding: 15px !important;
+}
+
+table {
+    background: rgba(26, 26, 26, 0.8) !important;
+}
+
+thead th {
+    background: rgba(230, 190, 138, 0.2) !important;
+    color: #E6BE8A !important;
+    border-bottom: 2px solid #E6BE8A !important;
+    font-weight: 700 !important;
+}
+
+tbody tr {
+    background: rgba(42, 42, 42, 0.6) !important;
+    border-bottom: 1px solid rgba(230, 190, 138, 0.1) !important;
+}
+
+tbody tr:hover {
+    background: rgba(230, 190, 138, 0.1) !important;
+}
+
+tbody td, tbody th {
+    color: #ccc !important;
+    border-bottom: 1px solid rgba(230, 190, 138, 0.1) !important;
+}
+
+/* Ссылки */
+a:link, a:visited {
+    color: #E6BE8A !important;
+    text-decoration: none !important;
+}
+
+a:hover {
+    color: #ffd700 !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5) !important;
+}
+
+/* Кнопки */
+.button, input[type=submit], input[type=button], .submit-row input, button {
+    background: linear-gradient(135deg, #E6BE8A, #c4a060) !important;
+    color: #1a1a1a !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 10px 20px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 5px 15px rgba(230, 190, 138, 0.3) !important;
+}
+
+.button:hover, input[type=submit]:hover, input[type=button]:hover, .submit-row input:hover, button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(230, 190, 138, 0.5) !important;
+}
+
+.button.default, input[type=submit].default, .submit-row input.default {
+    background: linear-gradient(135deg, #ffd700, #E6BE8A) !important;
+}
+
+/* Формы */
+.form-row {
+    background: rgba(42, 42, 42, 0.6) !important;
+    border-radius: 10px !important;
+    padding: 15px !important;
+    margin-bottom: 15px !important;
+    border: 1px solid rgba(230, 190, 138, 0.2) !important;
+}
+
+input[type=text], input[type=password], input[type=email], input[type=url],
+input[type=number], input[type=tel], textarea, select {
+    background: rgba(26, 26, 26, 0.8) !important;
+    border: 2px solid rgba(230, 190, 138, 0.3) !important;
+    border-radius: 8px !important;
+    color: #fff !important;
+    padding: 10px !important;
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus,
+textarea:focus, select:focus {
+    border-color: #E6BE8A !important;
+    box-shadow: 0 0 15px rgba(230, 190, 138, 0.3) !important;
+    outline: none !important;
+}
+
+/* Навигация */
+.breadcrumbs {
+    background: rgba(42, 42, 42, 0.9) !important;
+    border: 1px solid #E6BE8A !important;
+    border-radius: 10px !important;
+    padding: 15px !important;
+    color: #E6BE8A !important;
+}
+
+.breadcrumbs a {
+    color: #E6BE8A !important;
+}
+
+/* Сайдбар */
+#changelist-filter {
+    background: rgba(42, 42, 42, 0.9) !important;
+    border: 2px solid #E6BE8A !important;
+    border-radius: 15px !important;
+}
+
+#changelist-filter h2 {
+    background: linear-gradient(135deg, #E6BE8A, #c4a060) !important;
+    color: #1a1a1a !important;
+    padding: 10px !important;
+    border-radius: 12px 12px 0 0 !important;
+}
+
+#changelist-filter h3 {
+    color: #E6BE8A !important;
+    font-weight: 700 !important;
+}
+
+#changelist-filter li {
+    background: rgba(26, 26, 26, 0.6) !important;
+    margin: 5px !important;
+    border-radius: 5px !important;
+}
+
+#changelist-filter li:hover {
+    background: rgba(230, 190, 138, 0.1) !important;
+}
+
+/* Пагинация */
+.paginator {
+    color: #E6BE8A !important;
+}
+
+.paginator a:link, .paginator a:visited {
+    background: rgba(230, 190, 138, 0.2) !important;
+    border: 1px solid #E6BE8A !important;
+    border-radius: 5px !important;
+    padding: 5px 10px !important;
+    margin: 0 2px !important;
+}
+
+.paginator a:hover {
+    background: rgba(230, 190, 138, 0.4) !important;
+}
+
+/* Сообщения */
+.messagelist {
+    border-radius: 10px !important;
+    overflow: hidden !important;
+}
+
+.messagelist li {
+    background: rgba(76, 175, 80, 0.2) !important;
+    border: 2px solid #4caf50 !important;
+    color: #66bb6a !important;
+    border-radius: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+.messagelist li.error {
+    background: rgba(244, 67, 54, 0.2) !important;
+    border-color: #f44336 !important;
+    color: #ff6b6b !important;
+}
+
+.messagelist li.warning {
+    background: rgba(255, 152, 0, 0.2) !important;
+    border-color: #ff9800 !important;
+    color: #ffb74d !important;
+}
+
+/* Действия */
+.actions {
+    background: rgba(42, 42, 42, 0.9) !important;
+    border: 2px solid #E6BE8A !important;
+    border-radius: 10px !important;
+    padding: 15px !important;
+}
+
+.actions label {
+    color: #E6BE8A !important;
+}
+
+/* Чекбоксы */
+input[type=checkbox] {
+    accent-color: #E6BE8A !important;
+}
+
+/* Fieldsets */
+.aligned label {
+    color: #E6BE8A !important;
+    font-weight: 600 !important;
+}
+
+fieldset.module {
+    background: rgba(42, 42, 42, 0.6) !important;
+    border: 2px solid rgba(230, 190, 138, 0.3) !important;
+    border-radius: 10px !important;
+}
+
+fieldset h2 {
+    background: rgba(230, 190, 138, 0.2) !important;
+    color: #E6BE8A !important;
+    border-radius: 8px !important;
+    padding: 10px !important;
+}
+
+/* Помощь */
+.help {
+    color: #888 !important;
+}
+
+/* Readonly fields */
+.readonly {
+    color: #aaa !important;
+}
+
+/* Dashboard */
+#content-main {
+    background: transparent !important;
+}
+
+.dashboard .module table {
+    border-radius: 10px !important;
+}
+
+/* Логин */
+.login {
+    background: linear-gradient(135deg, #0a0a0a, #1a1a1a) !important;
+}
+
+.login #content {
+    background: rgba(42, 42, 42, 0.95) !important;
+    border: 3px solid #E6BE8A !important;
+    border-radius: 20px !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8) !important;
+}
+
+.login #header {
+    background: transparent !important;
+    border: none !important;
+}
+
+.login form {
+    background: transparent !important;
+}
+
+/* Скроллбар */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #E6BE8A, #c4a060);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #ffd700, #E6BE8A);
+}

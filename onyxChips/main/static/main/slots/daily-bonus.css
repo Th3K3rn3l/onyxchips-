@@ -1,0 +1,258 @@
+/* Ежедневный бонус popup */
+.daily-bonus-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.daily-bonus-popup.show {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.daily-bonus-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+}
+
+.daily-bonus-content {
+    position: relative;
+    background: linear-gradient(145deg, rgba(42, 42, 42, 0.98), rgba(26, 26, 26, 0.98));
+    border: 4px solid #E6BE8A;
+    border-radius: 30px;
+    padding: 50px 60px;
+    text-align: center;
+    max-width: 500px;
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.9),
+        0 0 50px rgba(230, 190, 138, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    animation: bonusSlideIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes bonusSlideIn {
+    0% {
+        transform: scale(0.5) translateY(-100px);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+.daily-bonus-icon {
+    font-size: 100px;
+    margin-bottom: 20px;
+    animation: iconBounce 1s ease-in-out infinite;
+}
+
+.daily-bonus-icon.celebration {
+    animation: iconSpin 0.8s ease-out;
+}
+
+@keyframes iconBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes iconSpin {
+    0% {
+        transform: rotate(0deg) scale(0);
+    }
+    50% {
+        transform: rotate(180deg) scale(1.3);
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+.daily-bonus-title {
+    font-size: 42px;
+    font-weight: 900;
+    color: #E6BE8A;
+    letter-spacing: 4px;
+    margin-bottom: 15px;
+    text-shadow:
+        0 0 20px rgba(230, 190, 138, 0.8),
+        0 0 40px rgba(230, 190, 138, 0.4);
+    animation: titleGlow 2s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+    0%, 100% {
+        text-shadow:
+            0 0 20px rgba(230, 190, 138, 0.8),
+            0 0 40px rgba(230, 190, 138, 0.4);
+    }
+    50% {
+        text-shadow:
+            0 0 30px rgba(230, 190, 138, 1),
+            0 0 60px rgba(230, 190, 138, 0.6);
+    }
+}
+
+.daily-bonus-text {
+    font-size: 18px;
+    color: #888;
+    margin-bottom: 30px;
+}
+
+.daily-bonus-coins {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.coin {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #ffd700, #E6BE8A);
+    border-radius: 50%;
+    box-shadow:
+        0 10px 30px rgba(255, 215, 0, 0.5),
+        inset 0 2px 10px rgba(255, 255, 255, 0.3);
+    animation: coinFloat 2s ease-in-out infinite;
+}
+
+.coin:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.coin:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.coin:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes coinFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-15px) rotate(180deg);
+    }
+}
+
+.daily-bonus-btn {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, #E6BE8A, #c4a060);
+    border: none;
+    border-radius: 15px;
+    color: #1a1a1a;
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow:
+        0 10px 30px rgba(230, 190, 138, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.daily-bonus-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.daily-bonus-btn:hover::before {
+    width: 400px;
+    height: 400px;
+}
+
+.daily-bonus-btn:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 15px 40px rgba(230, 190, 138, 0.7),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.bonus-amount {
+    font-size: 72px;
+    font-weight: 900;
+    color: #4caf50;
+    margin: 20px 0;
+    text-shadow:
+        0 0 30px rgba(76, 175, 80, 0.8),
+        0 0 60px rgba(76, 175, 80, 0.4);
+    animation: amountPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes amountPop {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.bonus-streak {
+    font-size: 20px;
+    color: #E6BE8A;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.bonus-hint {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 30px;
+}
+
+/* Светлая тема */
+body.light-theme .daily-bonus-content {
+    background: linear-gradient(145deg, #ffffff, #f5f5f5);
+    border-color: #c4a060;
+}
+
+body.light-theme .daily-bonus-title {
+    color: #c4a060;
+}
+
+body.light-theme .daily-bonus-text,
+body.light-theme .bonus-hint {
+    color: #666;
+}
+
+body.light-theme .bonus-streak {
+    color: #8b7355;
+}

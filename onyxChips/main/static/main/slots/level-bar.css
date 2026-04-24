@@ -1,0 +1,185 @@
+/* Прогресс-бар уровня */
+.level-bar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(26, 26, 26, 0.95);
+    padding: 10px 20px;
+    z-index: 1000;
+    border-bottom: 2px solid #E6BE8A;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+.level-bar-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.level-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-width: 200px;
+}
+
+.level-badge {
+    background: linear-gradient(135deg, #E6BE8A, #c4a060);
+    color: #1a1a1a;
+    font-weight: 900;
+    font-size: 18px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(230, 190, 138, 0.4);
+    animation: badge-pulse 2s ease-in-out infinite;
+}
+
+@keyframes badge-pulse {
+    0%, 100% {
+        box-shadow: 0 5px 15px rgba(230, 190, 138, 0.4);
+    }
+    50% {
+        box-shadow: 0 5px 25px rgba(230, 190, 138, 0.6);
+    }
+}
+
+.level-rank {
+    color: #E6BE8A;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.progress-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    color: #888;
+    font-size: 12px;
+}
+
+.progress-bar-bg {
+    height: 20px;
+    background: rgba(42, 42, 42, 0.8);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(230, 190, 138, 0.3);
+    position: relative;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #E6BE8A, #ffd700, #E6BE8A);
+    background-size: 200% 100%;
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    animation: progress-shine 2s linear infinite;
+    box-shadow: 0 0 20px rgba(230, 190, 138, 0.5);
+    position: relative;
+}
+
+.progress-bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: progress-wave 1.5s ease-in-out infinite;
+}
+
+@keyframes progress-shine {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 200% 50%;
+    }
+}
+
+@keyframes progress-wave {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.level-stats {
+    display: flex;
+    gap: 15px;
+    color: #E6BE8A;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.level-stats span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Светлая тема */
+body.light-theme .level-bar-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom-color: #c4a060;
+}
+
+body.light-theme .level-badge {
+    background: linear-gradient(135deg, #E6BE8A, #c4a060);
+}
+
+body.light-theme .level-rank {
+    color: #8b7355;
+}
+
+body.light-theme .progress-bar-bg {
+    background: rgba(230, 190, 138, 0.2);
+    border-color: rgba(196, 160, 96, 0.4);
+}
+
+body.light-theme .level-stats {
+    color: #8b7355;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .level-bar-content {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .level-info {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .level-stats {
+        width: 100%;
+        justify-content: space-around;
+        font-size: 11px;
+    }
+}
+
+/* Отступ для контента под прогресс-баром */
+body {
+    padding-top: 80px;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 120px;
+    }
+}
