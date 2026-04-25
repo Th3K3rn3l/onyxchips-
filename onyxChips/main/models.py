@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 class User(AbstractUser):
@@ -35,23 +36,27 @@ class User(AbstractUser):
     @property
     def experience_progress(self):
         """Прогресс в процентах до следующего уровня"""
-        return (self.experience / self.experience_to_next_level) * 100
+        exp_needed = self.experience_to_next_level
+        if exp_needed == 0:
+            return 0
+        progress = (self.experience / exp_needed) * 100
+        return min(progress, 100)  # Ограничиваем максимум 100%
 
     @property
     def rank_title(self):
         """Звание игрока в зависимости от уровня"""
         if self.level < 5:
-            return "Новичок"
+            return _("Новичок")
         elif self.level < 10:
-            return "Игрок"
+            return _("Игрок")
         elif self.level < 20:
-            return "Опытный"
+            return _("Опытный")
         elif self.level < 50:
-            return "Профессионал"
+            return _("Профессионал")
         elif self.level < 100:
-            return "Мастер"
+            return _("Мастер")
         else:
-            return "Легенда"
+            return _("Легенда")
 
     def add_experience(self, amount):
         """Добавить опыт и проверить повышение уровня"""

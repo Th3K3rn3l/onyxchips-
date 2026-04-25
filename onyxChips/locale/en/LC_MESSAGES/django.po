@@ -1,0 +1,234 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-25 07:25+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Настройки"
+msgstr "Settings"
+
+msgid "Игра"
+msgstr "Game"
+
+msgid "Звуковые эффекты"
+msgstr "Sound Effects"
+
+msgid "Включить звуки при вращении и выигрыше"
+msgstr "Enable sounds for spinning and winning"
+
+msgid "Анимации"
+msgstr "Animations"
+
+msgid "Показывать анимации и эффекты"
+msgstr "Show animations and effects"
+
+msgid "Автоигра"
+msgstr "Auto Play"
+
+msgid "Разрешить автоматическое вращение"
+msgstr "Allow automatic spinning"
+
+msgid "Интерфейс"
+msgstr "Interface"
+
+msgid "Язык"
+msgstr "Language"
+
+msgid "Выберите язык интерфейса"
+msgstr "Select interface language"
+
+msgid "Тема"
+msgstr "Theme"
+
+msgid "Цветовая схема приложения"
+msgstr "Application color scheme"
+
+msgid "Темная"
+msgstr "Dark"
+
+msgid "Светлая"
+msgstr "Light"
+
+msgid "Авто"
+msgstr "Auto"
+
+msgid "Уведомления"
+msgstr "Notifications"
+
+msgid "Email уведомления"
+msgstr "Email Notifications"
+
+msgid "Получать новости на почту"
+msgstr "Receive news by email"
+
+msgid "Push уведомления"
+msgstr "Push Notifications"
+
+msgid "Показывать уведомления в браузере"
+msgstr "Show browser notifications"
+
+msgid "Сохранить настройки"
+msgstr "Save Settings"
+
+msgid "На главную"
+msgstr "Home"
+
+msgid "Профиль"
+msgstr "Profile"
+
+msgid "Выход"
+msgstr "Logout"
+
+msgid "Баланс"
+msgstr "Balance"
+
+msgid "Уровень"
+msgstr "Level"
+
+msgid "Опыт"
+msgstr "Experience"
+
+msgid "Слоты"
+msgstr "Slots"
+
+msgid "О нас"
+msgstr "About"
+
+msgid "Добро пожаловать"
+msgstr "Welcome"
+
+msgid "Войти"
+msgstr "Login"
+
+msgid "Регистрация"
+msgstr "Register"
+
+msgid "Имя пользователя"
+msgstr "Username"
+
+msgid "Пароль"
+msgstr "Password"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Повторите пароль"
+msgstr "Repeat Password"
+
+msgid "Пароли не совпадают!"
+msgstr "Passwords do not match!"
+
+msgid "Имя пользователя уже занято!"
+msgstr "Username is already taken!"
+
+msgid "Email уже зарегистрирован!"
+msgstr "Email is already registered!"
+
+msgid "Неверное имя пользователя или пароль!"
+msgstr "Invalid username or password!"
+
+msgid "Вы успешно вышли из системы!"
+msgstr "You have successfully logged out!"
+
+msgid "С возвращением"
+msgstr "Welcome back"
+
+msgid "Ежедневный бонус"
+msgstr "Daily Bonus"
+
+msgid "Получить бонус"
+msgstr "Claim Bonus"
+
+msgid "Статистика"
+msgstr "Statistics"
+
+msgid "Всего игр"
+msgstr "Total Games"
+
+msgid "Побед"
+msgstr "Wins"
+
+msgid "Поражений"
+msgstr "Losses"
+
+msgid "Самый большой выигрыш"
+msgstr "Biggest Win"
+
+msgid "Онлайн Казино"
+msgstr "Online Casino"
+
+msgid "Выбери свою игру"
+msgstr "Choose Your Game"
+
+msgid "Рулетка"
+msgstr "Roulette"
+
+msgid "Блэкджек"
+msgstr "Blackjack"
+
+msgid "Нет аккаунта?"
+msgstr "Don't have an account?"
+
+msgid "Уже есть аккаунт?"
+msgstr "Already have an account?"
+
+msgid "Подтвердите пароль"
+msgstr "Confirm Password"
+
+msgid "Зарегистрироваться"
+msgstr "Register"
+
+msgid "Дата регистрации"
+msgstr "Registration Date"
+
+msgid "Последний вход"
+msgstr "Last Login"
+
+msgid "фишек"
+msgstr "chips"
+
+msgid "Добро пожаловать, %(username)s! Вы получили 1000 фишек!"
+msgstr "Welcome, %(username)s! You received 1000 chips!"
+
+msgid "С возвращением, %(username)s!"
+msgstr "Welcome back, %(username)s!"
+
+msgid "Ставка"
+msgstr "Bet"
+
+msgid "Крутить"
+msgstr "Spin"
+
+msgid "Новичок"
+msgstr "Beginner"
+
+msgid "Игрок"
+msgstr "Player"
+
+msgid "Опытный"
+msgstr "Experienced"
+
+msgid "Профессионал"
+msgstr "Professional"
+
+msgid "Мастер"
+msgstr "Master"
+
+msgid "Легенда"
+msgstr "Legend"
+
+msgid "Загрузка"
+msgstr "Loading"

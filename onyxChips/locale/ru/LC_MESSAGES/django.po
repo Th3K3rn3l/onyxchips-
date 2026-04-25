@@ -1,0 +1,234 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-25 07:25+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgid "Настройки"
+msgstr "Настройки"
+
+msgid "Игра"
+msgstr "Игра"
+
+msgid "Звуковые эффекты"
+msgstr "Звуковые эффекты"
+
+msgid "Включить звуки при вращении и выигрыше"
+msgstr "Включить звуки при вращении и выигрыше"
+
+msgid "Анимации"
+msgstr "Анимации"
+
+msgid "Показывать анимации и эффекты"
+msgstr "Показывать анимации и эффекты"
+
+msgid "Автоигра"
+msgstr "Автоигра"
+
+msgid "Разрешить автоматическое вращение"
+msgstr "Разрешить автоматическое вращение"
+
+msgid "Интерфейс"
+msgstr "Интерфейс"
+
+msgid "Язык"
+msgstr "Язык"
+
+msgid "Выберите язык интерфейса"
+msgstr "Выберите язык интерфейса"
+
+msgid "Тема"
+msgstr "Тема"
+
+msgid "Цветовая схема приложения"
+msgstr "Цветовая схема приложения"
+
+msgid "Темная"
+msgstr "Темная"
+
+msgid "Светлая"
+msgstr "Светлая"
+
+msgid "Авто"
+msgstr "Авто"
+
+msgid "Уведомления"
+msgstr "Уведомления"
+
+msgid "Email уведомления"
+msgstr "Email уведомления"
+
+msgid "Получать новости на почту"
+msgstr "Получать новости на почту"
+
+msgid "Push уведомления"
+msgstr "Push уведомления"
+
+msgid "Показывать уведомления в браузере"
+msgstr "Показывать уведомления в браузере"
+
+msgid "Сохранить настройки"
+msgstr "Сохранить настройки"
+
+msgid "На главную"
+msgstr "На главную"
+
+msgid "Профиль"
+msgstr "Профиль"
+
+msgid "Выход"
+msgstr "Выход"
+
+msgid "Баланс"
+msgstr "Баланс"
+
+msgid "Уровень"
+msgstr "Уровень"
+
+msgid "Опыт"
+msgstr "Опыт"
+
+msgid "Слоты"
+msgstr "Слоты"
+
+msgid "О нас"
+msgstr "О нас"
+
+msgid "Добро пожаловать"
+msgstr "Добро пожаловать"
+
+msgid "Войти"
+msgstr "Войти"
+
+msgid "Регистрация"
+msgstr "Регистрация"
+
+msgid "Имя пользователя"
+msgstr "Имя пользователя"
+
+msgid "Пароль"
+msgstr "Пароль"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Повторите пароль"
+msgstr "Повторите пароль"
+
+msgid "Пароли не совпадают!"
+msgstr "Пароли не совпадают!"
+
+msgid "Имя пользователя уже занято!"
+msgstr "Имя пользователя уже занято!"
+
+msgid "Email уже зарегистрирован!"
+msgstr "Email уже зарегистрирован!"
+
+msgid "Неверное имя пользователя или пароль!"
+msgstr "Неверное имя пользователя или пароль!"
+
+msgid "Вы успешно вышли из системы!"
+msgstr "Вы успешно вышли из системы!"
+
+msgid "С возвращением"
+msgstr "С возвращением"
+
+msgid "Ежедневный бонус"
+msgstr "Ежедневный бонус"
+
+msgid "Получить бонус"
+msgstr "Получить бонус"
+
+msgid "Статистика"
+msgstr "Статистика"
+
+msgid "Всего игр"
+msgstr "Всего игр"
+
+msgid "Побед"
+msgstr "Побед"
+
+msgid "Поражений"
+msgstr "Поражений"
+
+msgid "Самый большой выигрыш"
+msgstr "Самый большой выигрыш"
+
+msgid "Онлайн Казино"
+msgstr "Онлайн Казино"
+
+msgid "Выбери свою игру"
+msgstr "Выбери свою игру"
+
+msgid "Рулетка"
+msgstr "Рулетка"
+
+msgid "Блэкджек"
+msgstr "Блэкджек"
+
+msgid "Нет аккаунта?"
+msgstr "Нет аккаунта?"
+
+msgid "Уже есть аккаунт?"
+msgstr "Уже есть аккаунт?"
+
+msgid "Подтвердите пароль"
+msgstr "Подтвердите пароль"
+
+msgid "Зарегистрироваться"
+msgstr "Зарегистрироваться"
+
+msgid "Дата регистрации"
+msgstr "Дата регистрации"
+
+msgid "Последний вход"
+msgstr "Последний вход"
+
+msgid "фишек"
+msgstr "фишек"
+
+msgid "Добро пожаловать, %(username)s! Вы получили 1000 фишек!"
+msgstr "Добро пожаловать, %(username)s! Вы получили 1000 фишек!"
+
+msgid "С возвращением, %(username)s!"
+msgstr "С возвращением, %(username)s!"
+
+msgid "Ставка"
+msgstr "Ставка"
+
+msgid "Крутить"
+msgstr "Крутить"
+
+msgid "Новичок"
+msgstr "Новичок"
+
+msgid "Игрок"
+msgstr "Игрок"
+
+msgid "Опытный"
+msgstr "Опытный"
+
+msgid "Профессионал"
+msgstr "Профессионал"
+
+msgid "Мастер"
+msgstr "Мастер"
+
+msgid "Легенда"
+msgstr "Легенда"
+
+msgid "Загрузка"
+msgstr "Загрузка"

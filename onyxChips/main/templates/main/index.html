@@ -1,16 +1,20 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OnyxChips - Онлайн Казино</title>
+    <title>OnyxChips - {% trans "Онлайн Казино" %}</title>
     <link rel="stylesheet" href="{% static 'main/slots/style.css' %}">
     <link rel="stylesheet" href="{% static 'main/slots/daily-bonus.css' %}">
     <link rel="stylesheet" href="{% static 'main/slots/loading-screen.css' %}">
     <link rel="stylesheet" href="{% static 'main/slots/page-transitions.css' %}">
     <link rel="stylesheet" href="{% static 'main/slots/mobile.css' %}">
     <script src="{% static 'main/slots/loading-screen.js' %}"></script>
+    <script>
+        window.LOADING_TEXT = "{% trans 'Загрузка' %}";
+    </script>
 </head>
 <body>
     {% if user.is_authenticated %}
@@ -42,24 +46,24 @@
         <!-- Заголовок -->
         <div class="main-title">
             <h1>ONYXCHIPS</h1>
-            <p>ВЫБЕРИ СВОЮ ИГРУ</p>
+            <p>{% trans "Выбери свою игру" %}</p>
         </div>
 
         <!-- Кнопки игр -->
         <div class="game-buttons">
             <a href="#" class="game-btn">
-                <img src="{% static 'main/slots/roulette-icon.png' %}" alt="Рулетка" class="game-img">
-                <div class="game-label">РУЛЕТКА</div>
+                <img src="{% static 'main/slots/roulette-icon.png' %}" alt="{% trans 'Рулетка' %}" class="game-img">
+                <div class="game-label">{% trans "Рулетка" %}</div>
             </a>
 
             <a href="{% url 'slots' %}" class="game-btn">
-                <img src="{% static 'main/slots/slots-icon.png' %}" alt="Слоты" class="game-img">
-                <div class="game-label">СЛОТЫ</div>
+                <img src="{% static 'main/slots/slots-icon.png' %}" alt="{% trans 'Слоты' %}" class="game-img">
+                <div class="game-label">{% trans "Слоты" %}</div>
             </a>
 
             <a href="#" class="game-btn">
-                <img src="{% static 'main/slots/blackjack-icon.png' %}" alt="Блэкджек" class="game-img">
-                <div class="game-label">БЛЭКДЖЕК</div>
+                <img src="{% static 'main/slots/blackjack-icon.png' %}" alt="{% trans 'Блэкджек' %}" class="game-img">
+                <div class="game-label">{% trans "Блэкджек" %}</div>
             </a>
         </div>
     </div>

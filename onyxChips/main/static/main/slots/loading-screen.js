@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="spinner-ring"></div>
         </div>
         <div class="loading-text">
-            Загрузка<span class="loading-dots"></span>
+            ${window.LOADING_TEXT || 'Загрузка'}<span class="loading-dots"></span>
         </div>
         <div class="loading-progress">
             <div class="loading-progress-bar"></div>

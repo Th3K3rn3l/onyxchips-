@@ -1,0 +1,234 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-25 07:25+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Настройки"
+msgstr "Configuración"
+
+msgid "Игра"
+msgstr "Juego"
+
+msgid "Звуковые эффекты"
+msgstr "Efectos de Sonido"
+
+msgid "Включить звуки при вращении и выигрыше"
+msgstr "Activar sonidos al girar y ganar"
+
+msgid "Анимации"
+msgstr "Animaciones"
+
+msgid "Показывать анимации и эффекты"
+msgstr "Mostrar animaciones y efectos"
+
+msgid "Автоигра"
+msgstr "Juego Automático"
+
+msgid "Разрешить автоматическое вращение"
+msgstr "Permitir giro automático"
+
+msgid "Интерфейс"
+msgstr "Interfaz"
+
+msgid "Язык"
+msgstr "Idioma"
+
+msgid "Выберите язык интерфейса"
+msgstr "Seleccione el idioma de la interfaz"
+
+msgid "Тема"
+msgstr "Tema"
+
+msgid "Цветовая схема приложения"
+msgstr "Esquema de color de la aplicación"
+
+msgid "Темная"
+msgstr "Oscuro"
+
+msgid "Светлая"
+msgstr "Claro"
+
+msgid "Авто"
+msgstr "Auto"
+
+msgid "Уведомления"
+msgstr "Notificaciones"
+
+msgid "Email уведомления"
+msgstr "Notificaciones por Email"
+
+msgid "Получать новости на почту"
+msgstr "Recibir noticias por correo"
+
+msgid "Push уведомления"
+msgstr "Notificaciones Push"
+
+msgid "Показывать уведомления в браузере"
+msgstr "Mostrar notificaciones en el navegador"
+
+msgid "Сохранить настройки"
+msgstr "Guardar Configuración"
+
+msgid "На главную"
+msgstr "Inicio"
+
+msgid "Профиль"
+msgstr "Perfil"
+
+msgid "Выход"
+msgstr "Salir"
+
+msgid "Баланс"
+msgstr "Balance"
+
+msgid "Уровень"
+msgstr "Nivel"
+
+msgid "Опыт"
+msgstr "Experiencia"
+
+msgid "Слоты"
+msgstr "Tragamonedas"
+
+msgid "О нас"
+msgstr "Acerca de"
+
+msgid "Добро пожаловать"
+msgstr "Bienvenido"
+
+msgid "Войти"
+msgstr "Iniciar Sesión"
+
+msgid "Регистрация"
+msgstr "Registro"
+
+msgid "Имя пользователя"
+msgstr "Nombre de Usuario"
+
+msgid "Пароль"
+msgstr "Contraseña"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Повторите пароль"
+msgstr "Repetir Contraseña"
+
+msgid "Пароли не совпадают!"
+msgstr "¡Las contraseñas no coinciden!"
+
+msgid "Имя пользователя уже занято!"
+msgstr "¡El nombre de usuario ya está en uso!"
+
+msgid "Email уже зарегистрирован!"
+msgstr "¡El email ya está registrado!"
+
+msgid "Неверное имя пользователя или пароль!"
+msgstr "¡Nombre de usuario o contraseña incorrectos!"
+
+msgid "Вы успешно вышли из системы!"
+msgstr "¡Has cerrado sesión exitosamente!"
+
+msgid "С возвращением"
+msgstr "Bienvenido de nuevo"
+
+msgid "Ежедневный бонус"
+msgstr "Bono Diario"
+
+msgid "Получить бонус"
+msgstr "Reclamar Bono"
+
+msgid "Статистика"
+msgstr "Estadísticas"
+
+msgid "Всего игр"
+msgstr "Total de Juegos"
+
+msgid "Побед"
+msgstr "Victorias"
+
+msgid "Поражений"
+msgstr "Derrotas"
+
+msgid "Самый большой выигрыш"
+msgstr "Mayor Ganancia"
+
+msgid "Онлайн Казино"
+msgstr "Casino en Línea"
+
+msgid "Выбери свою игру"
+msgstr "Elige Tu Juego"
+
+msgid "Рулетка"
+msgstr "Ruleta"
+
+msgid "Блэкджек"
+msgstr "Blackjack"
+
+msgid "Нет аккаунта?"
+msgstr "¿No tienes cuenta?"
+
+msgid "Уже есть аккаунт?"
+msgstr "¿Ya tienes cuenta?"
+
+msgid "Подтвердите пароль"
+msgstr "Confirmar Contraseña"
+
+msgid "Зарегистрироваться"
+msgstr "Registrarse"
+
+msgid "Дата регистрации"
+msgstr "Fecha de Registro"
+
+msgid "Последний вход"
+msgstr "Último Acceso"
+
+msgid "фишек"
+msgstr "fichas"
+
+msgid "Добро пожаловать, %(username)s! Вы получили 1000 фишек!"
+msgstr "¡Bienvenido, %(username)s! ¡Recibiste 1000 fichas!"
+
+msgid "С возвращением, %(username)s!"
+msgstr "¡Bienvenido de nuevo, %(username)s!"
+
+msgid "Ставка"
+msgstr "Apuesta"
+
+msgid "Крутить"
+msgstr "Girar"
+
+msgid "Новичок"
+msgstr "Principiante"
+
+msgid "Игрок"
+msgstr "Jugador"
+
+msgid "Опытный"
+msgstr "Experimentado"
+
+msgid "Профессионал"
+msgstr "Profesional"
+
+msgid "Мастер"
+msgstr "Maestro"
+
+msgid "Легенда"
+msgstr "Leyenda"
+
+msgid "Загрузка"
+msgstr "Cargando"

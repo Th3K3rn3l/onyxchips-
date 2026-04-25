@@ -1,10 +1,11 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OnyxChips — Настройки</title>
+    <title>OnyxChips — {% trans "Настройки" %}</title>
     <link rel="stylesheet" href="{% static 'main/slots/style.css' %}">
     <style>
         .settings-container {
@@ -132,7 +133,7 @@
         <!-- Верхняя панель -->
         <div class="top-bar">
             <div class="logo">
-                <a href="{% url 'index' %}" class="back-link">← На главную</a>
+                <a href="{% url 'index' %}" class="back-link">← {% trans "На главную" %}</a>
                 <img src="{% static 'main/slots/onyxchips-logo.png' %}" alt="OnyxChips" class="logo-img">
             </div>
             <div class="top-buttons">
@@ -152,15 +153,15 @@
 
         <!-- Настройки -->
         <div class="settings-container">
-            <h1 class="settings-title">НАСТРОЙКИ</h1>
+            <h1 class="settings-title">{% trans "Настройки" %}</h1>
 
             <div class="settings-section">
-                <h2 class="section-title">Игра</h2>
+                <h2 class="section-title">{% trans "Игра" %}</h2>
 
                 <div class="setting-item">
                     <div>
-                        <div class="setting-label">Звуковые эффекты</div>
-                        <div class="setting-description">Включить звуки при вращении и выигрыше</div>
+                        <div class="setting-label">{% trans "Звуковые эффекты" %}</div>
+                        <div class="setting-description">{% trans "Включить звуки при вращении и выигрыше" %}</div>
                     </div>
                     <div class="toggle-switch active" id="sound-toggle" onclick="toggleSound(this)">
                         <div class="toggle-slider"></div>
@@ -169,8 +170,8 @@
 
                 <div class="setting-item">
                     <div>
-                        <div class="setting-label">Анимации</div>
-                        <div class="setting-description">Показывать анимации и эффекты</div>
+                        <div class="setting-label">{% trans "Анимации" %}</div>
+                        <div class="setting-description">{% trans "Показывать анимации и эффекты" %}</div>
                     </div>
                     <div class="toggle-switch active" onclick="this.classList.toggle('active')">
                         <div class="toggle-slider"></div>
@@ -179,8 +180,8 @@
 
                 <div class="setting-item">
                     <div>
-                        <div class="setting-label">Автоигра</div>
-                        <div class="setting-description">Разрешить автоматическое вращение</div>
+                        <div class="setting-label">{% trans "Автоигра" %}</div>
+                        <div class="setting-description">{% trans "Разрешить автоматическое вращение" %}</div>
                     </div>
                     <div class="toggle-switch" onclick="this.classList.toggle('active')">
                         <div class="toggle-slider"></div>
@@ -189,40 +190,40 @@
             </div>
 
             <div class="settings-section">
-                <h2 class="section-title">Интерфейс</h2>
+                <h2 class="section-title">{% trans "Интерфейс" %}</h2>
 
                 <div class="setting-item">
                     <div>
-                        <div class="setting-label">Язык</div>
-                        <div class="setting-description">Выберите язык интерфейса</div>
+                        <div class="setting-label">{% trans "Язык" %}</div>
+                        <div class="setting-description">{% trans "Выберите язык интерфейса" %}</div>
                     </div>
-                    <select class="select-box">
-                        <option>Русский</option>
-                        <option>English</option>
-                        <option>Español</option>
+                    <select class="select-box" id="language-select">
+                        <option value="ru">Русский</option>
+                        <option value="en">English</option>
+                        <option value="es">Español</option>
                     </select>
                 </div>
 
                 <div class="setting-item">
                     <div>
-                        <div class="setting-label">Тема</div>
-                        <div class="setting-description">Цветовая схема приложения</div>
+                        <div class="setting-label">{% trans "Тема" %}</div>
+                        <div class="setting-description">{% trans "Цветовая схема приложения" %}</div>
                     </div>
                     <select class="select-box" id="theme-select">
-                        <option>Темная</option>
-                        <option>Светлая</option>
-                        <option>Авто</option>
+                        <option value="dark">{% trans "Темная" %}</option>
+                        <option value="light">{% trans "Светлая" %}</option>
+                        <option value="auto">{% trans "Авто" %}</option>
                     </select>
                 </div>
             </div>
 
             <div class="settings-section">
-                <h2 class="section-title">Уведомления</h2>
+                <h2 class="section-title">{% trans "Уведомления" %}</h2>
 
                 <div class="setting-item">
                     <div>
-                        <div class="setting-label">Email уведомления</div>
-                        <div class="setting-description">Получать новости на почту</div>
+                        <div class="setting-label">{% trans "Email уведомления" %}</div>
+                        <div class="setting-description">{% trans "Получать новости на почту" %}</div>
                     </div>
                     <div class="toggle-switch active" onclick="this.classList.toggle('active')">
                         <div class="toggle-slider"></div>
@@ -231,8 +232,8 @@
 
                 <div class="setting-item">
                     <div>
-                        <div class="setting-label">Push уведомления</div>
-                        <div class="setting-description">Показывать уведомления в браузере</div>
+                        <div class="setting-label">{% trans "Push уведомления" %}</div>
+                        <div class="setting-description">{% trans "Показывать уведомления в браузере" %}</div>
                     </div>
                     <div class="toggle-switch" onclick="this.classList.toggle('active')">
                         <div class="toggle-slider"></div>
@@ -240,7 +241,7 @@
                 </div>
             </div>
 
-            <button class="save-btn">СОХРАНИТЬ НАСТРОЙКИ</button>
+            <button class="save-btn">{% trans "Сохранить настройки" %}</button>
         </div>
     </div>
 
@@ -256,6 +257,57 @@
                     soundToggle.classList.remove('active');
                 }
             }
+
+            // Восстанавливаем выбранную тему из localStorage
+            const themeSelect = document.getElementById('theme-select');
+            if (themeSelect) {
+                const savedTheme = localStorage.getItem('selectedTheme') || 'dark';
+                themeSelect.value = savedTheme;
+
+                // Сохраняем выбор темы
+                themeSelect.addEventListener('change', function() {
+                    localStorage.setItem('selectedTheme', this.value);
+                });
+            }
+
+            // Определяем текущий язык из URL
+            const currentPath = window.location.pathname;
+            const langMatch = currentPath.match(/^\/(ru|en|es)\//);
+            const currentLang = langMatch ? langMatch[1] : 'ru';
+
+            // Устанавливаем выбранный язык в селекторе
+            const languageSelect = document.getElementById('language-select');
+            if (languageSelect) {
+                languageSelect.value = currentLang;
+            }
+
+            // Обработчик смены языка
+            if (languageSelect) {
+                languageSelect.addEventListener('change', function() {
+                    const language = this.value;
+
+                    fetch('/api/change-language/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCookie('csrftoken')
+                        },
+                        body: JSON.stringify({ language: language })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Перенаправляем на URL с новым языком
+                            const currentPath = window.location.pathname;
+                            // Убираем старый префикс языка если есть
+                            const pathWithoutLang = currentPath.replace(/^\/(ru|en|es)\//, '/');
+                            // Добавляем новый префикс языка
+                            window.location.href = '/' + language + pathWithoutLang;
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                });
+            }
         });
 
         function toggleSound(toggle) {
@@ -267,6 +319,22 @@
                     soundManager.play('click');
                 }
             }
+        }
+
+        // Функция для получения CSRF токена
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
         }
     </script>
 </body>

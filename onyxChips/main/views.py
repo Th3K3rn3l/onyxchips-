@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from django.utils import translation
+from django.utils.translation import gettext as _
 from .models import User
 
 # Create your views here.
@@ -41,15 +43,15 @@ def register_view(request):
 
         # Валидация
         if password1 != password2:
-            messages.error(request, 'Пароли не совпадают!')
+            messages.error(request, _('Пароли не совпадают!'))
             return render(request, 'main/register.html')
 
         if User.objects.filter(username=username).exists():
-            messages.error(request, 'Имя пользователя уже занято!')
+            messages.error(request, _('Имя пользователя уже занято!'))
             return render(request, 'main/register.html')
 
         if User.objects.filter(email=email).exists():
-            messages.error(request, 'Email уже зарегистрирован!')
+            messages.error(request, _('Email уже зарегистрирован!'))
             return render(request, 'main/register.html')
 
         # Создание пользователя
@@ -63,7 +65,7 @@ def register_view(request):
         )
 
         login(request, user)
-        messages.success(request, f'Добро пожаловать, {username}! Вы получили 1000 фишек!')
+        messages.success(request, _('Добро пожаловать, %(username)s! Вы получили 1000 фишек!') % {'username': username})
         return redirect('index')
 
     return render(request, 'main/register.html')
@@ -80,17 +82,17 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            messages.success(request, f'С возвращением, {username}!')
+            messages.success(request, _('С возвращением, %(username)s!') % {'username': username})
             return redirect('index')
         else:
-            messages.error(request, 'Неверное имя пользователя или пароль!')
+            messages.error(request, _('Неверное имя пользователя или пароль!'))
 
     return render(request, 'main/login.html')
 
 @login_required
 def logout_view(request):
     logout(request)
-    messages.success(request, 'Вы успешно вышли из системы!')
+    messages.success(request, _('Вы успешно вышли из системы!'))
     return redirect('login')
 
 @login_required
@@ -160,3 +162,24 @@ def game_result(request):
         'total_games': user.total_games,
         'total_wins': user.total_wins
     })
+
+@login_required
+@require_POST
+def change_language(request):
+    """API endpoint для смены языка"""
+    import json
+    from django.conf import settings
+
+    data = json.loads(request.body)
+    language = data.get('language', 'ru')
+
+    # Проверяем, что язык поддерживается
+    supported_languages = ['ru', 'en', 'es']
+    if language not in supported_languages:
+        return JsonResponse({'success': False, 'error': 'Unsupported language'})
+
+    # Активируем язык
+    translation.activate(language)
+    request.session['django_language'] = language
+
+    return JsonResponse({'success': True, 'language': language})

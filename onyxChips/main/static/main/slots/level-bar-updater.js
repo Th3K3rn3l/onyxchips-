@@ -13,8 +13,8 @@ class LevelBarUpdater {
     animateProgress(currentXP, targetXP, maxXP, duration = 1000) {
         if (!this.progressFill || !this.progressLabel) return;
 
-        const startPercent = (currentXP / maxXP) * 100;
-        const endPercent = (targetXP / maxXP) * 100;
+        const startPercent = Math.min((currentXP / maxXP) * 100, 100);
+        const endPercent = Math.min((targetXP / maxXP) * 100, 100);
         const startTime = Date.now();
 
         const animate = () => {
@@ -24,7 +24,7 @@ class LevelBarUpdater {
             // Easing function для плавности
             const easeOutCubic = 1 - Math.pow(1 - progress, 3);
 
-            const currentPercent = startPercent + (endPercent - startPercent) * easeOutCubic;
+            const currentPercent = Math.min(startPercent + (endPercent - startPercent) * easeOutCubic, 100);
             const displayXP = Math.round(currentXP + (targetXP - currentXP) * easeOutCubic);
 
             this.progressFill.style.width = currentPercent + '%';
@@ -102,7 +102,7 @@ class LevelBarUpdater {
 
     // Вычисление максимального опыта для уровня
     calculateMaxXP(level) {
-        return 100 + (level - 1) * 50;
+        return level * 100;
     }
 
     // Обновление статистики
@@ -145,29 +145,31 @@ class LevelBarUpdater {
 window.levelBarUpdater = new LevelBarUpdater();
 
 // CSS для анимации повышения уровня
-const style = document.createElement('style');
-style.textContent = `
-    .level-up-animation {
-        animation: level-badge-pulse 1s ease-in-out;
-    }
+(function() {
+    const style = document.createElement('style');
+    style.textContent = `
+        .level-up-animation {
+            animation: level-badge-pulse 1s ease-in-out;
+        }
 
-    @keyframes level-badge-pulse {
-        0%, 100% {
-            transform: scale(1);
-            box-shadow: 0 0 20px rgba(230, 190, 138, 0.6);
+        @keyframes level-badge-pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(230, 190, 138, 0.6);
+            }
+            25% {
+                transform: scale(1.3) rotate(-5deg);
+                box-shadow: 0 0 40px rgba(230, 190, 138, 1);
+            }
+            50% {
+                transform: scale(1.4) rotate(5deg);
+                box-shadow: 0 0 60px rgba(255, 215, 0, 1);
+            }
+            75% {
+                transform: scale(1.3) rotate(-5deg);
+                box-shadow: 0 0 40px rgba(230, 190, 138, 1);
+            }
         }
-        25% {
-            transform: scale(1.3) rotate(-5deg);
-            box-shadow: 0 0 40px rgba(230, 190, 138, 1);
-        }
-        50% {
-            transform: scale(1.4) rotate(5deg);
-            box-shadow: 0 0 60px rgba(255, 215, 0, 1);
-        }
-        75% {
-            transform: scale(1.3) rotate(-5deg);
-            box-shadow: 0 0 40px rgba(230, 190, 138, 1);
-        }
-    }
-`;
-document.head.appendChild(style);
+    `;
+    document.head.appendChild(style);
+})();

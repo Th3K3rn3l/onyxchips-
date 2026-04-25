@@ -392,6 +392,36 @@ body {
     transform: scale(0.95);
 }
 
+.bet-input {
+    background: rgba(42, 42, 42, 0.8);
+    border: 2px solid #E6BE8A;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    width: 100px;
+    transition: all 0.3s ease;
+    -moz-appearance: textfield;
+}
+
+.bet-input::-webkit-outer-spin-button,
+.bet-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.bet-input:focus {
+    outline: none;
+    border-color: #ffd700;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+.bet-input:hover {
+    border-color: #ffd700;
+}
+
 /* ===== КНОПКА SPIN ===== */
 .spin-btn {
     background: linear-gradient(135deg, #E6BE8A, #c4a060);

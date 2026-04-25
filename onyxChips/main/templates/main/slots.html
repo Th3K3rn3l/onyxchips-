@@ -1,10 +1,11 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OnyxChips — Слоты</title>
+    <title>OnyxChips — {% trans "Слоты" %}</title>
     <link rel="stylesheet" href="{% static 'main/slots/slots-style.css' %}">
     <link rel="stylesheet" href="{% static 'main/slots/loading-screen.css' %}">
     <link rel="stylesheet" href="{% static 'main/slots/page-transitions.css' %}">
@@ -12,6 +13,9 @@
     <link rel="stylesheet" href="{% static 'main/slots/animations.css' %}">
     <link rel="stylesheet" href="{% static 'main/slots/mobile.css' %}">
     <script src="{% static 'main/slots/loading-screen.js' %}"></script>
+    <script>
+        window.LOADING_TEXT = "{% trans 'Загрузка' %}";
+    </script>
 </head>
 <body>
     {% include 'main/components/level_bar.html' %}
@@ -20,7 +24,7 @@
         <!-- Верхняя панель -->
         <div class="top-bar">
             <div class="logo">
-                <a href="{% url 'index' %}" class="back-link">← На главную</a>
+                <a href="{% url 'index' %}" class="back-link">← {% trans "На главную" %}</a>
                 <img src="{% static 'main/slots/onyxchips-logo.png' %}" alt="OnyxChips" class="logo-img">
             </div>
             <div class="top-buttons">
@@ -65,25 +69,25 @@
             <!-- Информационная панель -->
             <div class="info-panel">
                 <div class="balance-box">
-                    <span class="label">Баланс:</span>
+                    <span class="label">{% trans "Баланс" %}:</span>
                     <span class="value" id="balance">1000</span>
                 </div>
                 <div class="bet-box">
-                    <span class="label">Ставка:</span>
+                    <span class="label">{% trans "Ставка" %}:</span>
                     <div class="bet-controls">
                         <button class="bet-btn" id="betDown">-</button>
-                        <span class="value" id="betAmount">10</span>
+                        <input type="number" class="value bet-input" id="betAmount" value="10" min="10" max="1000" step="10">
                         <button class="bet-btn" id="betUp">+</button>
                     </div>
                 </div>
                 <div class="win-box">
-                    <span class="label">Выигрыш:</span>
+                    <span class="label">{% trans "Выигрыш" %}:</span>
                     <span class="value win-amount" id="winAmount">0</span>
                 </div>
             </div>
 
             <!-- Кнопка Spin -->
-            <button class="spin-btn" id="spinBtn">КРУТИТЬ</button>
+            <button class="spin-btn" id="spinBtn">{% trans "Крутить" %}</button>
 
             <!-- Сообщение о выигрыше -->
             <div class="win-message" id="winMessage"></div>
@@ -106,6 +110,7 @@
     </script>
     <script src="{% static 'main/slots/sound-manager.js' %}"></script>
     <script src="{% static 'main/slots/level-bar-updater.js' %}"></script>
+    <script src="{% static 'main/slots/notifications.js' %}"></script>
     <script src="{% static 'main/slots/theme-switcher.js' %}"></script>
     <script src="{% static 'main/slots/page-transitions.js' %}"></script>
     <script src="{% static 'main/slots/hotkeys.js' %}"></script>

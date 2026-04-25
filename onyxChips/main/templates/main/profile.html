@@ -1,10 +1,11 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OnyxChips — Профиль</title>
+    <title>OnyxChips — {% trans "Профиль" %}</title>
     <link rel="stylesheet" href="{% static 'main/slots/style.css' %}">
     <style>
         .profile-container {
@@ -118,7 +119,7 @@
         <!-- Верхняя панель -->
         <div class="top-bar">
             <div class="logo">
-                <a href="{% url 'index' %}" class="back-link">← На главную</a>
+                <a href="{% url 'index' %}" class="back-link">← {% trans "На главную" %}</a>
                 <img src="{% static 'main/slots/onyxchips-logo.png' %}" alt="OnyxChips" class="logo-img">
             </div>
             <div class="top-buttons">
@@ -146,39 +147,39 @@
 
             <div class="profile-stats">
                 <div class="stat-card">
-                    <div class="stat-label">Баланс</div>
+                    <div class="stat-label">{% trans "Баланс" %}</div>
                     <div class="stat-value">{{ user.balance|floatformat:0 }}</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">Всего игр</div>
+                    <div class="stat-label">{% trans "Всего игр" %}</div>
                     <div class="stat-value">{{ user.total_games }}</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">Выигрышей</div>
+                    <div class="stat-label">{% trans "Побед" %}</div>
                     <div class="stat-value">{{ user.total_wins }}</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">Уровень</div>
+                    <div class="stat-label">{% trans "Уровень" %}</div>
                     <div class="stat-value">{{ user.level }}</div>
                 </div>
             </div>
 
             <div class="profile-info">
                 <div class="info-row">
-                    <span class="info-label">Email:</span>
+                    <span class="info-label">{% trans "Email" %}:</span>
                     <span class="info-value">{{ user.email }}</span>
                 </div>
                 <div class="info-row">
-                    <span class="info-label">Дата регистрации:</span>
+                    <span class="info-label">{% trans "Дата регистрации" %}:</span>
                     <span class="info-value">{{ user.date_joined|date:"d E Y" }}</span>
                 </div>
                 <div class="info-row">
-                    <span class="info-label">Последний вход:</span>
+                    <span class="info-label">{% trans "Последний вход" %}:</span>
                     <span class="info-value">{{ user.last_login|date:"d E Y, H:i" }}</span>
                 </div>
                 <div class="info-row">
-                    <span class="info-label">Самый большой выигрыш:</span>
-                    <span class="info-value" style="color: #ffd700;">{{ user.biggest_win|floatformat:0 }} фишек</span>
+                    <span class="info-label">{% trans "Самый большой выигрыш" %}:</span>
+                    <span class="info-value" style="color: #ffd700;">{{ user.biggest_win|floatformat:0 }} {% trans "фишек" %}</span>
                 </div>
             </div>
         </div>

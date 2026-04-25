@@ -1,10 +1,12 @@
 {% load static %}
+{% load i18n %}
+{% load l10n %}
 <link rel="stylesheet" href="{% static 'main/slots/level-bar.css' %}">
 
 <div class="level-bar-container">
     <div class="level-bar-content">
         <div class="level-info">
-            <div class="level-badge">LVL {{ user.level }}</div>
+            <div class="level-badge">{% trans "Уровень" %} {{ user.level }}</div>
             <div class="level-rank">{{ user.rank_title }}</div>
         </div>
 
@@ -14,7 +16,7 @@
                 <span>{{ user.experience_progress|floatformat:0 }}%</span>
             </div>
             <div class="progress-bar-bg">
-                <div class="progress-bar-fill" style="width: {{ user.experience_progress }}%"></div>
+                <div class="progress-bar-fill" style="width: {{ user.experience_progress|unlocalize }}%"></div>
             </div>
         </div>
 

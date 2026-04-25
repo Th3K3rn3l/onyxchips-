@@ -476,7 +476,7 @@ function changeBet(delta) {
         // Анимация изменения ставки
         betAmountElement.style.transform = 'scale(1.2)';
         betAmountElement.style.color = '#ffd700';
-        betAmountElement.textContent = currentBet;
+        betAmountElement.value = currentBet;
 
         setTimeout(() => {
             betAmountElement.style.transform = 'scale(1)';
@@ -507,6 +507,22 @@ function changeBet(delta) {
 spinBtn.addEventListener('click', spin);
 betDownBtn.addEventListener('click', () => changeBet(-5));
 betUpBtn.addEventListener('click', () => changeBet(5));
+
+// Обработка ввода ставки вручную
+betAmountElement.addEventListener('input', function() {
+    let value = parseInt(this.value) || 10;
+    if (value < 5) value = 5;
+    if (value > balance) value = balance;
+    currentBet = value;
+    this.value = value;
+});
+
+betAmountElement.addEventListener('blur', function() {
+    if (!this.value || parseInt(this.value) < 5) {
+        this.value = 10;
+        currentBet = 10;
+    }
+});
 
 // Горячие клавиши
 document.addEventListener('keydown', (e) => {

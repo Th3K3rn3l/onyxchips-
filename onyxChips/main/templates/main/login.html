@@ -1,10 +1,11 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OnyxChips — Вход</title>
+    <title>OnyxChips — {% trans "Вход" %}</title>
     <link rel="stylesheet" href="{% static 'main/slots/auth-style.css' %}">
     <link rel="stylesheet" href="{% static 'main/slots/notifications.css' %}">
 </head>
@@ -15,7 +16,7 @@
                 <img src="{% static 'main/slots/onyxchips-logo.png' %}" alt="OnyxChips">
             </div>
 
-            <h1 class="auth-title">ВХОД</h1>
+            <h1 class="auth-title">{% trans "Вход" %}</h1>
 
             {% if messages %}
                 {% for message in messages %}
@@ -29,20 +30,20 @@
                 {% csrf_token %}
 
                 <div class="form-group">
-                    <label for="username">Имя пользователя</label>
+                    <label for="username">{% trans "Имя пользователя" %}</label>
                     <input type="text" id="username" name="username" required autofocus>
                 </div>
 
                 <div class="form-group">
-                    <label for="password">Пароль</label>
+                    <label for="password">{% trans "Пароль" %}</label>
                     <input type="password" id="password" name="password" required>
                 </div>
 
-                <button type="submit" class="auth-btn">ВОЙТИ</button>
+                <button type="submit" class="auth-btn">{% trans "Войти" %}</button>
             </form>
 
             <div class="auth-links">
-                <p>Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a></p>
+                <p>{% trans "Нет аккаунта?" %} <a href="{% url 'register' %}">{% trans "Зарегистрироваться" %}</a></p>
             </div>
         </div>
 
