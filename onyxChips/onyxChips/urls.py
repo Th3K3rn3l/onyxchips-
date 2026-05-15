@@ -25,7 +25,12 @@ urlpatterns = [
     path('api/change-language/', views.change_language, name='change_language'),
     path('api/check-daily-bonus/', views.check_daily_bonus, name='check_daily_bonus'),
     path('api/claim-daily-bonus/', views.claim_daily_bonus, name='claim_daily_bonus'),
-    path('api/game-result/', views.game_result, name='game_result'),
+    
+    # СТАРЫЙ НЕБЕЗОПАСНЫЙ endpoint (закомментирован - больше не используется)
+    # path('api/game-result/', views.game_result, name='game_result'),
+    
+    # НОВЫЙ БЕЗОПАСНЫЙ endpoint для игры в слоты
+    path('api/slots/spin/', views.slots_spin, name='slots_spin'),
 ]
 
 # Страницы с префиксом языка

@@ -8,113 +8,9 @@ const SYMBOLS_IMG = {
     "crystal": STATIC_URL + "crystal.png"
 };
 
-// Класс игрового движка
-class SlotsEngine {
-    SYMBOLS_CONFIG = {
-        "cherry": {"weight": 40, "multiplier": 2},
-        "lemon": {"weight": 30, "multiplier": 2},
-        "orange": {"weight": 20, "multiplier": 2},
-        "plum": {"weight": 10, "multiplier": 15},
-        "seven": {"weight": 5, "multiplier": 50},
-        "crystal": {"weight": 1, "multiplier": 100},
-    };
-
-    GRID_SIZE = 3;
-
-    constructor() {
-        this.symbols = Object.keys(this.SYMBOLS_CONFIG);
-        this.weights = Object.values(this.SYMBOLS_CONFIG).map(s => s.weight);
-    }
-
-    _generateGrid() {
-        const flatGrid = [];
-        for (let i = 0; i < this.GRID_SIZE * this.GRID_SIZE; i++) {
-            flatGrid.push(this._getRandomSymbol());
-        }
-        const grid = [];
-        for (let i = 0; i < flatGrid.length; i += this.GRID_SIZE) {
-            grid.push(flatGrid.slice(i, i + this.GRID_SIZE));
-        }
-        return grid;
-    }
-
-    _getRandomSymbol() {
-        const totalWeight = this.weights.reduce((a, b) => a + b, 0);
-        let random = Math.random() * totalWeight;
-        let accumulated = 0;
-
-        for (let i = 0; i < this.symbols.length; i++) {
-            accumulated += this.weights[i];
-            if (random <= accumulated) {
-                return this.symbols[i];
-            }
-        }
-        return this.symbols[0];
-    }
-
-    _checkWin(grid) {
-        const wins = [];
-
-        // Проверка горизонталей
-        for (let r = 0; r < this.GRID_SIZE; r++) {
-            if (grid[r][0] === grid[r][1] && grid[r][1] === grid[r][2]) {
-                const symbol = grid[r][0];
-                wins.push({
-                    line: `row_${r}`,
-                    symbol: symbol,
-                    mult: this.SYMBOLS_CONFIG[symbol].multiplier,
-                    positions: [[r, 0], [r, 1], [r, 2]]
-                });
-            }
-        }
-
-        // Главная диагональ
-        if (grid[0][0] === grid[1][1] && grid[1][1] === grid[2][2]) {
-            const symbol = grid[0][0];
-            wins.push({
-                line: "diag_main",
-                symbol: symbol,
-                mult: this.SYMBOLS_CONFIG[symbol].multiplier,
-                positions: [[0, 0], [1, 1], [2, 2]]
-            });
-        }
-
-        // Побочная диагональ
-        if (grid[0][2] === grid[1][1] && grid[1][1] === grid[2][0]) {
-            const symbol = grid[0][2];
-            wins.push({
-                line: "diag_anti",
-                symbol: symbol,
-                mult: this.SYMBOLS_CONFIG[symbol].multiplier,
-                positions: [[0, 2], [1, 1], [2, 0]]
-            });
-        }
-
-        return wins;
-    }
-
-    spin(betAmount) {
-        const grid = this._generateGrid();
-        const winningLines = this._checkWin(grid);
-
-        const totalMultiplier = winningLines.reduce((sum, line) => sum + line.mult, 0);
-        const payout = betAmount * totalMultiplier;
-
-        return {
-            grid: grid,
-            wins: winningLines,
-            payout: payout,
-            isWin: payout > 0
-        };
-    }
-}
-
 // Инициализация игры
-let balance = 1000;
 let currentBet = 10;
 let isSpinning = false;
-
-const engine = new SlotsEngine();
 
 // DOM элементы
 const reelsElement = document.getElementById('reels');
@@ -126,11 +22,32 @@ const betDownBtn = document.getElementById('betDown');
 const betUpBtn = document.getElementById('betUp');
 const winMessageElement = document.getElementById('winMessage');
 const winPopup = document.getElementById('winPopup');
-const winPopupTitle = document.getElementById('winPopupTitle');
 const winPopupAmount = document.getElementById('winPopupAmount');
 const winPopupDetails = document.getElementById('winPopupDetails');
 
-// Обновление отображения барабанов с картинками
+// Функция для получения CSRF токена
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Безопасное преобразование чисел
+function safeNumber(value, defaultValue = 0) {
+    const num = Number(value);
+    return isNaN(num) ? defaultValue : num;
+}
+
+// Обновление отображения барабанов
 function updateReelsDisplay(grid) {
     const reels = reelsElement.querySelectorAll('.reel');
 
@@ -142,65 +59,59 @@ function updateReelsDisplay(grid) {
         for (let row = 0; row < 3; row++) {
             const symbol = symbolsInColumn[row];
             const imgFile = SYMBOLS_IMG[symbol];
-            imgElements[row].src = imgFile;
-            imgElements[row].alt = symbol;
+            if (imgFile && imgElements[row]) {
+                imgElements[row].src = imgFile;
+                imgElements[row].alt = symbol;
+            }
         }
     }
 }
 
-// Улучшенная анимация прокрутки с синхронным стартом и последовательной остановкой
+// Анимация прокрутки
 function animateSpin(finalGrid) {
     return new Promise(async (resolve) => {
         const reels = reelsElement.querySelectorAll('.reel');
         const allSymbols = Object.values(SYMBOLS_IMG);
 
-        // Звук начала вращения
         if (window.soundManager) soundManager.play('spin');
 
-        // Запускаем ВСЕ барабаны одновременно
         const spinIntervals = [];
 
         reels.forEach((reel, i) => {
             const images = reel.querySelectorAll('.reel-img');
             reel.classList.add('spinning');
 
-            // Плавная смена символов для каждого барабана
             const spinInterval = setInterval(() => {
                 images.forEach(img => {
                     const randomImg = allSymbols[Math.floor(Math.random() * allSymbols.length)];
-                    img.src = randomImg;
+                    if (randomImg) img.src = randomImg;
                 });
-            }, 80); // Увеличил интервал для плавности
+            }, 80);
 
             spinIntervals.push(spinInterval);
         });
 
-        // Останавливаем барабаны по очереди слева направо
+        // Останавливаем барабаны по очереди
         for (let i = 0; i < reels.length; i++) {
-            // Задержка перед остановкой каждого барабана
             await new Promise(r => setTimeout(r, 1200 + i * 400));
 
             const reel = reels[i];
             const images = reel.querySelectorAll('.reel-img');
-
-            // Останавливаем интервал смены картинок
             clearInterval(spinIntervals[i]);
 
-            // Плавный переход к финальным символам
             await new Promise(r => setTimeout(r, 100));
 
-            // Устанавливаем финальные символы для этого столбца
             const symbolsInColumn = [finalGrid[0][i], finalGrid[1][i], finalGrid[2][i]];
             images.forEach((img, row) => {
                 const symbol = symbolsInColumn[row];
-                img.src = SYMBOLS_IMG[symbol];
-                img.alt = symbol;
+                const imgFile = SYMBOLS_IMG[symbol];
+                if (imgFile) {
+                    img.src = imgFile;
+                    img.alt = symbol;
+                }
             });
 
-            // Убираем класс spinning
             reel.classList.remove('spinning');
-
-            // Звук остановки барабана
             if (window.soundManager) soundManager.play('stop');
         }
 
@@ -212,25 +123,24 @@ function animateSpin(finalGrid) {
 function highlightWinningLines(wins) {
     const reels = reelsElement.querySelectorAll('.reel');
 
-    // Убираем предыдущие подсветки
     document.querySelectorAll('.reel-img').forEach(img => {
         img.classList.remove('win-highlight');
     });
 
-    if (wins.length === 0) return;
+    if (!wins || wins.length === 0) return;
 
-    // Добавляем класс win-highlight к выигрышным символам
     wins.forEach(win => {
-        win.positions.forEach(([row, col]) => {
-            const reel = reels[col];
-            const images = reel.querySelectorAll('.reel-img');
-            if (images[row]) {
-                images[row].classList.add('win-highlight');
-            }
-        });
+        if (win.positions && win.positions.length) {
+            win.positions.forEach(([row, col]) => {
+                const reel = reels[col];
+                const images = reel?.querySelectorAll('.reel-img');
+                if (images && images[row]) {
+                    images[row].classList.add('win-highlight');
+                }
+            });
+        }
     });
 
-    // Убираем подсветку через 2 секунды
     setTimeout(() => {
         document.querySelectorAll('.reel-img').forEach(img => {
             img.classList.remove('win-highlight');
@@ -240,48 +150,52 @@ function highlightWinningLines(wins) {
 
 // Анимация обновления баланса
 function animateBalanceUpdate(newBalance) {
-    const oldBalance = parseInt(balanceElement.textContent);
-    const diff = newBalance - oldBalance;
+    const safeBalance = safeNumber(newBalance);
+    const oldBalance = safeNumber(balanceElement.textContent, 1000);
+    const diff = safeBalance - oldBalance;
     const steps = 20;
     const stepValue = diff / steps;
     let currentStep = 0;
 
     const interval = setInterval(() => {
         currentStep++;
-        const displayValue = Math.round(oldBalance + stepValue * currentStep);
-        balanceElement.textContent = displayValue;
+        let displayValue = Math.round(oldBalance + stepValue * currentStep);
+        if (isNaN(displayValue)) displayValue = safeBalance;
+        if (balanceElement) balanceElement.textContent = displayValue;
 
         if (currentStep >= steps) {
             clearInterval(interval);
-            balanceElement.textContent = newBalance;
+            if (balanceElement) balanceElement.textContent = safeBalance;
         }
     }, 30);
 }
 
 // Анимация выигрыша
 function animateWinAmount(amount) {
-    if (amount === 0) {
-        winAmountElement.textContent = "0";
+    const safeAmount = safeNumber(amount);
+    
+    if (safeAmount === 0) {
+        if (winAmountElement) winAmountElement.textContent = "0";
         return;
     }
 
     const steps = 15;
-    const stepValue = amount / steps;
+    const stepValue = safeAmount / steps;
     let currentStep = 0;
 
     const interval = setInterval(() => {
         currentStep++;
         const displayValue = Math.round(stepValue * currentStep);
-        winAmountElement.textContent = displayValue;
+        if (winAmountElement) winAmountElement.textContent = displayValue;
 
         if (currentStep >= steps) {
             clearInterval(interval);
-            winAmountElement.textContent = amount;
+            if (winAmountElement) winAmountElement.textContent = safeAmount;
         }
     }, 40);
 }
 
-// Создание конфетти при большом выигрыше
+// Создание конфетти
 function createConfetti() {
     const colors = ['#ffd700', '#E6BE8A', '#ff6b6b', '#4ecdc4', '#45b7d1'];
     const confettiCount = 50;
@@ -324,205 +238,274 @@ function createConfetti() {
 
 // Показать popup выигрыша
 function showWinPopup(amount, wins) {
+    const safeAmount = safeNumber(amount);
     let details = '';
-    if (wins.length === 1) {
+    
+    if (wins && wins.length === 1) {
         const win = wins[0];
         details = `Линия: ${win.line} • Множитель x${win.mult}`;
-    } else if (wins.length > 1) {
+    } else if (wins && wins.length > 1) {
         const totalMult = wins.reduce((sum, w) => sum + w.mult, 0);
         details = `Множественный выигрыш! • x${totalMult}`;
     }
 
-    winPopupAmount.textContent = amount;
-    winPopupDetails.textContent = details;
+    if (winPopupAmount) winPopupAmount.textContent = safeAmount;
+    if (winPopupDetails) winPopupDetails.textContent = details;
 
-    // Показываем popup
-    winPopup.classList.add('show');
-
-    // Скрываем через 2.5 секунды
-    setTimeout(() => {
-        winPopup.classList.remove('show');
-    }, 2500);
+    if (winPopup) {
+        winPopup.classList.add('show');
+        setTimeout(() => {
+            winPopup.classList.remove('show');
+        }, 2500);
+    }
 }
 
-// Основной спин
+// Обновление статистики на странице
+// Обновление статистики на странице
+function updateStats(data) {
+    console.log('Updating stats with:', data); // Отладка
+    
+    // Обновляем баланс
+    const balanceEl = document.getElementById('balance');
+    if (balanceEl) {
+        balanceEl.textContent = safeNumber(data.new_balance);
+    }
+    
+    // Обновляем количество игр
+    const totalGamesEl = document.getElementById('totalGames');
+    if (totalGamesEl) {
+        const games = safeNumber(data.total_games);
+        totalGamesEl.textContent = games;
+        console.log('Games updated to:', games);
+    }
+    
+    // Обновляем количество побед
+    const totalWinsEl = document.getElementById('totalWins');
+    if (totalWinsEl) {
+        const wins = safeNumber(data.total_wins);
+        totalWinsEl.textContent = wins;
+        console.log('Wins updated to:', wins);
+    }
+    
+    // Обновляем звание
+    const rankTitleEl = document.getElementById('rankTitle');
+    if (rankTitleEl && data.new_level) {
+        const level = safeNumber(data.new_level, 1);
+        let rank = 'Новичок';
+        if (level >= 100) rank = 'Легенда';
+        else if (level >= 50) rank = 'Мастер';
+        else if (level >= 20) rank = 'Профессионал';
+        else if (level >= 10) rank = 'Опытный';
+        else if (level >= 5) rank = 'Игрок';
+        rankTitleEl.textContent = rank;
+        console.log('Rank updated to:', rank);
+    }
+    
+    // Обновляем прогресс-бар опыта
+    if (window.levelBarUpdater && data.exp_gained !== undefined) {
+        window.levelBarUpdater.updateAfterGame({
+            exp_gained: safeNumber(data.exp_gained),
+            new_level: safeNumber(data.new_level, 1),
+            level_up: data.level_up || false,
+            level_up_reward: safeNumber(data.level_up_reward)
+        });
+    }
+}
+
+// ГЛАВНЫЙ СПИН
 async function spin() {
     if (isSpinning) return;
 
     const bet = currentBet;
+    const currentBalance = safeNumber(balanceElement?.textContent, 1000);
 
-    if (bet > balance) {
-        winMessageElement.textContent = "❌ Недостаточно средств!";
-        winMessageElement.style.color = "#ff4444";
-        winMessageElement.classList.add('winning');
-        setTimeout(() => {
-            winMessageElement.textContent = "";
-            winMessageElement.classList.remove('winning');
-        }, 2000);
+    if (bet > currentBalance) {
+        if (winMessageElement) {
+            winMessageElement.textContent = "❌ Недостаточно средств!";
+            winMessageElement.style.color = "#ff4444";
+            winMessageElement.classList.add('winning');
+            setTimeout(() => {
+                if (winMessageElement) {
+                    winMessageElement.textContent = "";
+                    winMessageElement.classList.remove('winning');
+                }
+            }, 2000);
+        }
         return;
     }
 
     isSpinning = true;
-    spinBtn.disabled = true;
-    winMessageElement.textContent = "🎰 Крутим... 🎰";
-    winMessageElement.style.color = "#E6BE8A";
-    winMessageElement.classList.remove('winning');
-
-    // СНАЧАЛА генерируем результат
-    const result = engine.spin(bet);
-
-    // Анимация прокрутки с финальным результатом
-    await animateSpin(result.grid);
-
-    // Небольшая задержка перед показом результата
-    await new Promise(r => setTimeout(r, 300));
-
-    // Обновляем баланс с анимацией
-    const newBalance = balance - bet + result.payout;
-    animateBalanceUpdate(newBalance);
-    balance = newBalance;
-
-    // Анимация выигрыша
-    animateWinAmount(result.payout);
-
-    // Показываем результат
-    if (result.isWin) {
-        // Подсвечиваем выигрышные линии
-        highlightWinningLines(result.wins);
-
-        // Звук выигрыша
-        if (window.soundManager) {
-            if (result.payout >= bet * 20) {
-                soundManager.play('bigWin');
-            } else {
-                soundManager.play('win');
-            }
-        }
-
-        // Ждем 1.5 секунды чтобы пользователь увидел подсветку
-        await new Promise(r => setTimeout(r, 1500));
-
-        // Показываем popup выигрыша
-        showWinPopup(result.payout, result.wins);
-
-        // Эффект конфетти при большом выигрыше
-        if (result.payout >= bet * 20) {
-            createConfetti();
-        }
+    if (spinBtn) spinBtn.disabled = true;
+    if (winMessageElement) {
+        winMessageElement.textContent = "🎰 Крутим... 🎰";
+        winMessageElement.style.color = "#E6BE8A";
+        winMessageElement.classList.remove('winning');
     }
 
-    // Отправляем результат игры на сервер для начисления опыта
     try {
-        const response = await fetch('/api/game-result/', {
+        // Отправляем запрос на сервер
+        const response = await fetch('/api/slots/spin/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': getCookie('csrftoken')
             },
-            body: JSON.stringify({
-                bet: bet,
-                payout: result.payout,
-                is_win: result.isWin
-            })
+            body: JSON.stringify({ bet: bet })
         });
 
         const data = await response.json();
 
-        if (data.success) {
-            // Анимируем прогресс-бар опыта
-            if (window.levelBarUpdater) {
-                levelBarUpdater.updateAfterGame(data);
+        if (!data.success) {
+            throw new Error(data.error || 'Ошибка сервера');
+        }
+
+        // Безопасное преобразование всех данных
+        data.payout = safeNumber(data.payout);
+        data.new_balance = safeNumber(data.new_balance);
+        data.exp_gained = safeNumber(data.exp_gained, 10);
+        data.new_level = safeNumber(data.new_level, 1);
+        data.total_games = safeNumber(data.total_games);
+        data.total_wins = safeNumber(data.total_wins);
+        data.level_up_reward = safeNumber(data.level_up_reward);
+
+        // Анимация прокрутки
+        await animateSpin(data.grid);
+        await new Promise(r => setTimeout(r, 300));
+
+        // Обновляем отображение
+        animateBalanceUpdate(data.new_balance);
+        animateWinAmount(data.payout);
+        updateStats(data);
+
+        // Обработка выигрыша
+        if (data.is_win) {
+            highlightWinningLines(data.wins);
+
+            if (window.soundManager) {
+                if (data.payout >= bet * 20) {
+                    soundManager.play('bigWin');
+                } else {
+                    soundManager.play('win');
+                }
             }
 
-            // Если повышение уровня - показываем popup через 2 секунды (после анимации)
-            if (data.level_up) {
-                setTimeout(() => {
-                    if (window.showLevelUpPopup) {
-                        showLevelUpPopup(data.new_level, data.level_up_reward);
+            await new Promise(r => setTimeout(r, 1500));
+            showWinPopup(data.payout, data.wins);
+
+            if (data.payout >= bet * 20) {
+                createConfetti();
+            }
+        }
+
+        // Показываем повышение уровня
+        if (data.level_up) {
+            setTimeout(() => {
+                if (window.showLevelUpPopup) {
+                    window.showLevelUpPopup(data.new_level, data.level_up_reward);
+                } else {
+                    // Стандартное уведомление
+                    if (winMessageElement) {
+                        winMessageElement.textContent = `🎉 ПОВЫШЕНИЕ УРОВНЯ! Уровень ${data.new_level}! +${data.level_up_reward} фишек! 🎉`;
+                        winMessageElement.style.color = "#ffd700";
+                        winMessageElement.classList.add('winning');
+                        setTimeout(() => {
+                            if (winMessageElement) {
+                                winMessageElement.textContent = "";
+                                winMessageElement.classList.remove('winning');
+                            }
+                        }, 3000);
                     }
-                }, 2000);
-            }
+                }
+            }, 2000);
         }
+
     } catch (error) {
-        console.error('Ошибка отправки результата игры:', error);
-    }
-
-    isSpinning = false;
-    spinBtn.disabled = false;
-}
-
-// Функция для получения CSRF токена из cookies
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
+        console.error('Spin error:', error);
+        if (winMessageElement) {
+            winMessageElement.textContent = "❌ " + (error.message || 'Ошибка соединения');
+            winMessageElement.style.color = "#ff4444";
+            winMessageElement.classList.add('winning');
+            setTimeout(() => {
+                if (winMessageElement) {
+                    winMessageElement.textContent = "";
+                    winMessageElement.classList.remove('winning');
+                }
+            }, 2000);
         }
+    } finally {
+        isSpinning = false;
+        if (spinBtn) spinBtn.disabled = false;
     }
-    return cookieValue;
 }
 
-// Изменение ставки с анимацией
+// Изменение ставки
 function changeBet(delta) {
     let newBet = currentBet + delta;
-    if (newBet >= 5 && newBet <= balance) {
+    const currentBalance = safeNumber(balanceElement?.textContent, 1000);
+    
+    if (newBet >= 5 && newBet <= currentBalance) {
         currentBet = newBet;
-
-        // Анимация изменения ставки
-        betAmountElement.style.transform = 'scale(1.2)';
-        betAmountElement.style.color = '#ffd700';
-        betAmountElement.value = currentBet;
-
-        setTimeout(() => {
-            betAmountElement.style.transform = 'scale(1)';
-            betAmountElement.style.color = '#fff';
-        }, 200);
-
-        winAmountElement.textContent = "0";
-    } else if (newBet > balance) {
-        winMessageElement.textContent = "⚠️ Ставка не может превышать баланс!";
-        winMessageElement.style.color = "#ff4444";
-        winMessageElement.classList.add('winning');
-        setTimeout(() => {
-            winMessageElement.textContent = "";
-            winMessageElement.classList.remove('winning');
-        }, 1500);
+        if (betAmountElement) {
+            betAmountElement.style.transform = 'scale(1.2)';
+            betAmountElement.style.color = '#ffd700';
+            betAmountElement.value = currentBet;
+            setTimeout(() => {
+                if (betAmountElement) {
+                    betAmountElement.style.transform = 'scale(1)';
+                    betAmountElement.style.color = '#fff';
+                }
+            }, 200);
+        }
+        if (winAmountElement) winAmountElement.textContent = "0";
+    } else if (newBet > currentBalance) {
+        if (winMessageElement) {
+            winMessageElement.textContent = "⚠️ Ставка не может превышать баланс!";
+            winMessageElement.style.color = "#ff4444";
+            winMessageElement.classList.add('winning');
+            setTimeout(() => {
+                if (winMessageElement) {
+                    winMessageElement.textContent = "";
+                    winMessageElement.classList.remove('winning');
+                }
+            }, 1500);
+        }
     } else if (newBet < 5) {
-        winMessageElement.textContent = "⚠️ Минимальная ставка: 5";
-        winMessageElement.style.color = "#ff4444";
-        winMessageElement.classList.add('winning');
-        setTimeout(() => {
-            winMessageElement.textContent = "";
-            winMessageElement.classList.remove('winning');
-        }, 1500);
+        if (winMessageElement) {
+            winMessageElement.textContent = "⚠️ Минимальная ставка: 5";
+            winMessageElement.style.color = "#ff4444";
+            winMessageElement.classList.add('winning');
+            setTimeout(() => {
+                if (winMessageElement) {
+                    winMessageElement.textContent = "";
+                    winMessageElement.classList.remove('winning');
+                }
+            }, 1500);
+        }
     }
 }
 
 // События
-spinBtn.addEventListener('click', spin);
-betDownBtn.addEventListener('click', () => changeBet(-5));
-betUpBtn.addEventListener('click', () => changeBet(5));
+if (spinBtn) spinBtn.addEventListener('click', spin);
+if (betDownBtn) betDownBtn.addEventListener('click', () => changeBet(-5));
+if (betUpBtn) betUpBtn.addEventListener('click', () => changeBet(5));
 
-// Обработка ввода ставки вручную
-betAmountElement.addEventListener('input', function() {
-    let value = parseInt(this.value) || 10;
-    if (value < 5) value = 5;
-    if (value > balance) value = balance;
-    currentBet = value;
-    this.value = value;
-});
+if (betAmountElement) {
+    betAmountElement.addEventListener('input', function() {
+        let value = parseInt(this.value) || 10;
+        const currentBalance = safeNumber(balanceElement?.textContent, 1000);
+        if (value < 5) value = 5;
+        if (value > currentBalance) value = currentBalance;
+        currentBet = value;
+        this.value = value;
+    });
 
-betAmountElement.addEventListener('blur', function() {
-    if (!this.value || parseInt(this.value) < 5) {
-        this.value = 10;
-        currentBet = 10;
-    }
-});
+    betAmountElement.addEventListener('blur', function() {
+        if (!this.value || parseInt(this.value) < 5) {
+            this.value = 10;
+            currentBet = 10;
+        }
+    });
+}
 
 // Горячие клавиши
 document.addEventListener('keydown', (e) => {
@@ -538,7 +521,7 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Инициализация начального отображения (все вишни)
+// Инициализация начального отображения
 const initialGrid = [
     ["cherry", "cherry", "cherry"],
     ["cherry", "cherry", "cherry"],
@@ -546,5 +529,4 @@ const initialGrid = [
 ];
 updateReelsDisplay(initialGrid);
 
-console.log("🎰 Игра Слоты загружена!");
-console.log("💡 Подсказка: используйте Пробел для вращения, ↑↓ для изменения ставки");
+console.log("🎰 Игра Слоты загружена! (Серверная валидация активна)");

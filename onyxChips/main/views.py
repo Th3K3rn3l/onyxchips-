@@ -118,47 +118,99 @@ def claim_daily_bonus(request):
 
 @login_required
 @require_POST
-def game_result(request):
-    """API endpoint для обработки результата игры"""
+def slots_spin(request):
+    """
+    API endpoint для игры в слоты - ВСЯ ЛОГИКА НА СЕРВЕРЕ!
+    Клиент отправляет ТОЛЬКО ставку, сервер сам генерирует результат
+    """
     import json
-
-    data = json.loads(request.body)
-    bet = data.get('bet', 0)
-    payout = data.get('payout', 0)
-    is_win = data.get('is_win', False)
-
+    from main.logic.slots_machine import SlotsEngine
+    
+    # Получаем ставку от клиента
+    try:
+        data = json.loads(request.body)
+        bet_amount = int(data.get('bet', 0))
+    except:
+        return JsonResponse({'success': False, 'error': 'Неверный запрос'}, status=400)
+    
     user = request.user
+    
+    # 1. ВАЛИДАЦИЯ ставки на сервере
+    if bet_amount <= 0:
+        return JsonResponse({'success': False, 'error': 'Ставка должна быть больше 0'}, status=400)
+    
+    if bet_amount < 5:
+        return JsonResponse({'success': False, 'error': 'Минимальная ставка: 5'}, status=400)
+    
+    if user.balance < bet_amount:
+        return JsonResponse({'success': False, 'error': 'Недостаточно средств'}, status=400)
+    
+    # 2. РАСЧЁТ выигрыша на сервере (клиент не участвует!)
+    engine = SlotsEngine()
+    result = engine.spin(bet_amount)
+    
+    # 3. ИЗМЕНЕНИЕ БАЛАНСА на сервере
+    old_balance = user.balance
+    net_change = result['payout'] - bet_amount
+    user.balance += net_change
+    
+    # 4. ЛОГГИРОВАНИЕ транзакции
+    from .models import Transaction
+    Transaction.objects.create(
+        user=user,
+        amount=net_change,
+        transaction_type='GAME',
+        comment=f"Spin: {'Win' if result['is_win'] else 'Loss'} - {result['payout']}"
+    )
+    
+    # 5. ОБНОВЛЕНИЕ статистики игрока
     old_level = user.level
-
-    # Обновляем статистику
+    
     user.total_games += 1
-    if is_win:
+    if result['is_win']:
         user.total_wins += 1
-        if payout > user.biggest_win:
-            user.biggest_win = payout
+        if result['payout'] > user.biggest_win:
+            user.biggest_win = result['payout']
     else:
         user.total_losses += 1
-
+    
     # Начисляем опыт (10 опыта за игру, +5 за выигрыш)
-    exp_gained = 10
-    if is_win:
-        exp_gained += 5
-
+    exp_gained = 10 + (5 if result['is_win'] else 0)
     user.add_experience(exp_gained)
-
+    
+    # Сохраняем все изменения
+    user.save()
+    
     # Проверяем повышение уровня
     level_up = user.level > old_level
-    level_up_reward = 0
-    if level_up:
-        level_up_reward = user.level * 50
-
+    level_up_reward = user.level * 50 if level_up else 0
+    
+    # 6. ФОРМАТИРУЕМ результат для отправки клиенту
+    # Преобразуем сетку символов для отображения
+    formatted_grid = [[cell for cell in row] for row in result['grid']]
+    
+    # Форматируем выигрышные линии для подсветки
+    formatted_wins = []
+    for win in result['wins']:
+        formatted_wins.append({
+            'line': win['line'],
+            'symbol': win['symbol'],
+            'mult': win['mult'],
+            'positions': []
+        })
+    
+    # Отправляем результат клиенту
     return JsonResponse({
         'success': True,
+        'grid': formatted_grid,
+        'wins': formatted_wins,
+        'payout': result['payout'],
+        'is_win': result['is_win'],
+        'new_balance': user.balance,
         'exp_gained': exp_gained,
         'new_level': user.level,
         'level_up': level_up,
         'level_up_reward': level_up_reward,
-        'new_balance': user.balance,
         'total_games': user.total_games,
         'total_wins': user.total_wins
     })
