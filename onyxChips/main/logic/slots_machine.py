@@ -1,4 +1,11 @@
-import random
+import secrets
+
+# Криптографически безопасный генератор случайных чисел.
+# Использовать обычный random.choices нельзя: его состояние (Mersenne Twister)
+# теоретически можно восстановить, наблюдая за достаточным количеством выпадений,
+# и предсказать следующие результаты. secrets.SystemRandom использует системный CSPRNG.
+_secure_random = secrets.SystemRandom()
+
 
 class SlotsEngine:
     SYMBOLS_CONFIG = {
@@ -18,7 +25,7 @@ class SlotsEngine:
 
     def _generate_grid(self):
         """Генерирует сетку 3x3 на основе весов символов."""
-        flat_grid = random.choices(
+        flat_grid = _secure_random.choices(
             self.symbols, weights=self.weights, k=self.GRID_SIZE * self.GRID_SIZE
         )
         return [
@@ -26,39 +33,40 @@ class SlotsEngine:
         ]
 
     def _check_win(self, grid):
-        """Проверяет горизонтали и диагонали на наличие выигрышных линий."""
+        """Проверяет горизонтали и диагонали на наличие выигрышных линий.
+
+        Каждая запись содержит координаты ячеек (positions), чтобы клиент
+        мог подсветить выигрышные позиции.
+        """
         wins = []
 
         for r in range(SlotsEngine.GRID_SIZE):
             if grid[r][0] == grid[r][1] == grid[r][2]:
                 symbol = grid[r][0]
-                wins.append(
-                    {
-                        "line": f"row_{r}",
-                        "symbol": symbol,
-                        "mult": self.SYMBOLS_CONFIG[symbol]["multiplier"],
-                    }
-                )
+                wins.append({
+                    "line": f"row_{r}",
+                    "symbol": symbol,
+                    "mult": self.SYMBOLS_CONFIG[symbol]["multiplier"],
+                    "positions": [[r, 0], [r, 1], [r, 2]],
+                })
 
         if grid[0][0] == grid[1][1] == grid[2][2]:
             symbol = grid[0][0]
-            wins.append(
-                {
-                    "line": "diag_main",
-                    "symbol": symbol,
-                    "mult": self.SYMBOLS_CONFIG[symbol]["multiplier"],
-                }
-            )
+            wins.append({
+                "line": "diag_main",
+                "symbol": symbol,
+                "mult": self.SYMBOLS_CONFIG[symbol]["multiplier"],
+                "positions": [[0, 0], [1, 1], [2, 2]],
+            })
 
         if grid[0][2] == grid[1][1] == grid[2][0]:
             symbol = grid[0][2]
-            wins.append(
-                {
-                    "line": "diag_anti",
-                    "symbol": symbol,
-                    "mult": self.SYMBOLS_CONFIG[symbol]["multiplier"],
-                }
-            )
+            wins.append({
+                "line": "diag_anti",
+                "symbol": symbol,
+                "mult": self.SYMBOLS_CONFIG[symbol]["multiplier"],
+                "positions": [[0, 2], [1, 1], [2, 0]],
+            })
 
         return wins
 

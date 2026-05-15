@@ -64,8 +64,12 @@ class LevelBarUpdater {
             this.animateProgress(currentXP, maxXP, maxXP, 800);
 
             setTimeout(() => {
-                // Обновляем уровень
-                this.levelBadge.textContent = `LVL ${new_level}`;
+                // Обновляем уровень. Сохраняем формат, в котором текст
+                // был отрендерен сервером (например "Уровень 5"), просто
+                // заменяя число — иначе после ап-левела форматирование
+                // сломается ("LVL N" вместо локализованного варианта).
+                const badgeText = this.levelBadge.textContent || '';
+                this.levelBadge.textContent = badgeText.replace(/\d+/, new_level);
                 this.levelBadge.classList.add('level-up-animation');
 
                 // Звук повышения уровня
@@ -120,8 +124,14 @@ class LevelBarUpdater {
 
     // Анимация изменения числа
     animateNumber(element, targetValue, prefix = '') {
-        const currentText = element.textContent.replace(prefix, '');
-        const currentValue = parseInt(currentText) || 0;
+        // Если значение не пришло (undefined/null/NaN) — ничего не делаем,
+        // оставляем текущее число в DOM. Это защищает от NaN-ов в UI
+        // в случае, если сервер вдруг не пришлёт какое-то поле.
+        const target = Number(targetValue);
+        if (!Number.isFinite(target)) return;
+
+        const currentText = (element.textContent || '').replace(prefix, '');
+        const currentValue = parseInt(currentText, 10) || 0;
         const duration = 500;
         const startTime = Date.now();
 
@@ -129,7 +139,7 @@ class LevelBarUpdater {
             const elapsed = Date.now() - startTime;
             const progress = Math.min(elapsed / duration, 1);
 
-            const displayValue = Math.round(currentValue + (targetValue - currentValue) * progress);
+            const displayValue = Math.round(currentValue + (target - currentValue) * progress);
             element.textContent = prefix + displayValue;
 
             if (progress < 1) {

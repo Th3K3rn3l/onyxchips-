@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q, CheckConstraint
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 
@@ -23,7 +24,25 @@ class User(AbstractUser):
 
     # Настройки
     sound_enabled = models.BooleanField(default=True)
-    language = models.CharField(max_length=2, default='ru', choices=[('ru', 'Русский'), ('en', 'English')])
+    language = models.CharField(
+        max_length=2,
+        default='ru',
+        choices=[('ru', 'Русский'), ('en', 'English'), ('es', 'Español')],
+    )
+
+    class Meta:
+        # Защита на уровне БД: даже если в код где-то проскользнёт баг,
+        # СУБД откажется записать отрицательный баланс/уровень и т.п.
+        constraints = [
+            CheckConstraint(condition=Q(balance__gte=0), name='user_balance_non_negative'),
+            CheckConstraint(condition=Q(level__gte=1), name='user_level_at_least_1'),
+            CheckConstraint(condition=Q(experience__gte=0), name='user_experience_non_negative'),
+            CheckConstraint(condition=Q(total_games__gte=0), name='user_total_games_non_negative'),
+            CheckConstraint(condition=Q(total_wins__gte=0), name='user_total_wins_non_negative'),
+            CheckConstraint(condition=Q(total_losses__gte=0), name='user_total_losses_non_negative'),
+            CheckConstraint(condition=Q(biggest_win__gte=0), name='user_biggest_win_non_negative'),
+            CheckConstraint(condition=Q(daily_bonus_streak__gte=0), name='user_streak_non_negative'),
+        ]
 
     def __str__(self):
         return self.username

@@ -307,7 +307,12 @@ function updateStats(data) {
             exp_gained: safeNumber(data.exp_gained),
             new_level: safeNumber(data.new_level, 1),
             level_up: data.level_up || false,
-            level_up_reward: safeNumber(data.level_up_reward)
+            level_up_reward: safeNumber(data.level_up_reward),
+            // Эти поля нужны level-bar-updater'у для обновления статистики
+            // в верхней полосе. Без них получались NaN-ы.
+            new_balance: safeNumber(data.new_balance),
+            total_games: safeNumber(data.total_games),
+            total_wins: safeNumber(data.total_wins)
         });
     }
 }
